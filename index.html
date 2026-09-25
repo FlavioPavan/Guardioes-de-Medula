@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- html2canvas para Download da Insígnia -->
+  <!-- html2canvas para Download HD da Insígnia -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
@@ -23,9 +23,7 @@
       background-attachment: fixed;
     }
 
-    /* ============================================================
-       TEMA NEUTRO (Padrão Inicial)
-       ============================================================ */
+    /* TEMA NEUTRO */
     body.theme-neutro {
       background-color: #0f172a;
       background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.65), rgba(2, 6, 23, 0.85)),
@@ -33,9 +31,7 @@
       color: #f8fafc;
     }
 
-    /* ============================================================
-       TEMA OBSCURO (Rota Não - Umbral)
-       ============================================================ */
+    /* TEMA OBSCURO */
     body.theme-obscuro {
       background-color: #0a0203;
       background-image: linear-gradient(to bottom, rgba(15, 2, 4, 0.55), rgba(0, 0, 0, 0.88)),
@@ -46,13 +42,10 @@
       background-color: rgba(20, 5, 8, 0.92);
       backdrop-filter: blur(18px);
       border-color: #991b1b;
-      box-shadow: 0 0 50px rgba(153, 27, 27, 0.6),
-                  inset 0 0 30px rgba(239, 68, 68, 0.1);
+      box-shadow: 0 0 50px rgba(153, 27, 27, 0.6), inset 0 0 30px rgba(239, 68, 68, 0.1);
     }
 
-    /* ============================================================
-       TEMA CELESTIAL (Rota Sim - Luz Divina)
-       ============================================================ */
+    /* TEMA CELESTIAL */
     body.theme-celestial {
       background-color: #1e3a8a;
       background-image: linear-gradient(to bottom, rgba(30, 58, 138, 0.25), rgba(12, 74, 110, 0.55)),
@@ -63,17 +56,38 @@
       background-color: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(18px);
       border-color: rgba(253, 224, 71, 0.55);
-      box-shadow: 0 0 55px rgba(253, 224, 71, 0.35),
-                  inset 0 0 25px rgba(250, 204, 21, 0.08);
+      box-shadow: 0 0 55px rgba(253, 224, 71, 0.35), inset 0 0 25px rgba(250, 204, 21, 0.08);
     }
 
     .glow-gold {
       box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
     }
 
-    /* ============================================================
-       ANIMAÇÃO DE ENTRADA DE TELAS
-       ============================================================ */
+    /* EFEITOS ESPECIAIS DA INSÍGNIA GOLD GLASSMORPHISM */
+    .gold-glass-card {
+      background: linear-gradient(135deg, rgba(30, 27, 15, 0.9) 0%, rgba(15, 23, 42, 0.95) 50%, rgba(40, 30, 10, 0.9) 100%);
+      backdrop-filter: blur(25px);
+      border: 2px solid rgba(250, 204, 21, 0.7);
+      box-shadow: 0 0 45px rgba(250, 204, 21, 0.3), inset 0 0 25px rgba(250, 204, 21, 0.12);
+    }
+
+    .metallic-gold-text {
+      background: linear-gradient(180deg, #ffffff 0%, #fef08a 40%, #f59e0b 80%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .holo-seal {
+      background: conic-gradient(from 0deg, #fef08a, #f59e0b, #ec4899, #3b82f6, #10b981, #fef08a);
+      animation: holoShift 8s linear infinite;
+    }
+
+    @keyframes holoShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    /* ANIMAÇÃO DE ENTRADA DE TELAS */
     .page-transition {
       animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
@@ -91,7 +105,6 @@
       }
     }
 
-    /* Suporte ao gesto de arrastar */
     #swipe-card {
       touch-action: pan-y;
       will-change: transform;
@@ -103,6 +116,9 @@
   <!-- Canvas de Partículas Flutuantes -->
   <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-3 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs shadow-2xl border border-amber-200 transition-all text-center max-w-xs"></div>
+
   <!-- Header Global -->
   <header class="w-full max-w-4xl mx-auto px-4 py-4 flex items-center justify-between border-b border-white/20 backdrop-blur-md bg-black/40 rounded-b-xl relative z-10">
     <div class="flex items-center gap-2 cursor-pointer" onclick="navegarPara('screen-1')">
@@ -111,7 +127,6 @@
     </div>
     
     <div class="flex items-center gap-2">
-      <!-- Botão de Acesso Rápido à Central Explicativa Matriz -->
       <button onclick="navegarPara('screen-guia')" class="px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow">
         <i data-lucide="book-open-check" class="w-4 h-4"></i>
         <span class="hidden sm:inline">Guia Explicativo</span>
@@ -197,7 +212,7 @@
       </div>
     </section>
 
-    <!-- TELA 3: DESMISTIFICANDO A DOAÇÃO (SWIPE + VIBRAÇÃO) -->
+    <!-- TELA 3: DESMISTIFICANDO A DOAÇÃO -->
     <section id="screen-3" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Mito ou Verdade</span>
@@ -205,7 +220,6 @@
         <p class="text-xs text-white/90">Toque nos botões ou <span class="text-amber-300 font-bold underline">arraste o cartão</span> (⬅️ Mito / ➡️ Verdade)</p>
       </div>
 
-      <!-- Barra de Progresso -->
       <div class="max-w-md mx-auto space-y-1">
         <div class="flex justify-between text-[11px] text-white font-semibold">
           <span>Progresso do Conhecimento</span>
@@ -216,25 +230,18 @@
         </div>
       </div>
 
-      <!-- Container do Card Dynamic -->
       <div class="relative max-w-md mx-auto min-h-[310px] flex items-center justify-center">
         <div id="swipe-card" class="w-full card-bg p-6 rounded-2xl border border-amber-400/40 shadow-2xl space-y-5 text-center transition-all duration-200 select-none cursor-grab active:cursor-grabbing">
-
           <div class="w-12 h-12 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center mx-auto text-lg font-bold">
             <i data-lucide="help-circle" class="w-6 h-6"></i>
           </div>
-
           <div class="space-y-2">
             <span class="text-[10px] uppercase font-bold text-amber-400 tracking-widest">Afirmação</span>
             <h3 class="text-base sm:text-lg font-extrabold text-white leading-snug" id="card-question">
               "A doação dói e tira um pedaço do osso da coluna?"
             </h3>
           </div>
-
-          <!-- Caixa de Resposta Explicativa -->
           <div id="card-answer-box" class="hidden p-4 rounded-xl text-xs font-medium leading-relaxed border transition-all text-left"></div>
-
-          <!-- Botões de Escolha -->
           <div id="card-actions" class="grid grid-cols-2 gap-3 pt-2">
             <button onclick="responderMitoVerdade('MITO')" class="py-3.5 px-4 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white font-extrabold text-xs shadow-md transition-all border border-rose-400/40">
               👈 ❌ MITO
@@ -243,15 +250,12 @@
               ✅ VERDADE 👉
             </button>
           </div>
-
-          <!-- Botão Próximo Card -->
           <button id="btn-next-card" onclick="proximoCard()" class="hidden w-full py-3.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs glow-gold hover:bg-amber-300 transition-all">
             Próximo Cartão &rarr;
           </button>
         </div>
       </div>
 
-      <!-- Botão Avançar -->
       <div class="max-w-md mx-auto pt-2 space-y-2">
         <button id="btn-avancar-simulador" disabled onclick="navegarPara('screen-4')" class="w-full py-4 rounded-xl bg-black/40 text-white/40 font-extrabold text-sm cursor-not-allowed transition-all border border-white/10 backdrop-blur-md">
           Responda os 4 cartões para avançar &rarr;
@@ -259,7 +263,7 @@
       </div>
     </section>
 
-    <!-- TELA: CENTRAL EXPLICATIVA E CIENTÍFICA -->
+    <!-- TELA: GUIA EXPLICATIVO -->
     <section id="screen-guia" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Base de Conhecimento Matriz</span>
@@ -268,8 +272,6 @@
       </div>
 
       <div class="space-y-4">
-
-        <!-- Bloco 1: O que é a Medula Óssea vs Coluna -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -281,12 +283,10 @@
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). 
-            A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. Nela são produzidas as células-tronco hematopoéticas, responsáveis por gerar os glóbulos vermelhos, glóbulos brancos e plaquetas. <strong>Nenhum procedimento encosta na coluna vertebral!</strong>
+            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. <strong>Nenhum procedimento encosta na coluna vertebral!</strong>
           </p>
         </div>
 
-        <!-- Bloco 2: Como funciona a Compatibilidade HLA (1 em 100 mil) -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -298,54 +298,9 @@
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            A compatibilidade para transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Ao contrário do tipo sanguíneo (A, B, AB, O), o HLA possui milhões de combinações possíveis. Irmãos de mesmos pais possuem apenas 25% de chance de compatibilidade total. Na população em geral, a chance cai para 1 em 100 mil, por isso o REDOME necessita do maior número de voluntários cadastrados.
+            A compatibilidade para transplante depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Ao contrário do tipo sanguíneo (A, B, AB, O), o HLA possui milhões de combinações possíveis. Na população em geral, a chance cai para 1 em 100 mil, por isso o REDOME necessita do maior número de voluntários cadastrados.
           </p>
         </div>
-
-        <!-- Bloco 3: Os 2 Métodos de Doação -->
-        <div class="card-bg p-5 rounded-2xl border space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
-              <i data-lucide="stethoscope" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="font-extrabold text-sm text-amber-300">3. Quais são os 2 Métodos de Doação?</h3>
-              <span class="text-[10px] text-white/60">Apenas se houver compatibilidade futura</span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div class="p-3.5 bg-black/40 rounded-xl border border-white/10 space-y-2">
-              <strong class="text-amber-300 font-bold block">Método 1: Aférese (~80% dos casos)</strong>
-              <p class="text-white/80 text-[11px] leading-snug">
-                O doador toma um medicamento por 5 dias para mobilizar as células da medula para a corrente sanguínea. O sangue é filtrado por uma máquina que separa as células-tronco e devolve o restante para o corpo. Sem anestesia e com alta imediata!
-              </p>
-            </div>
-            <div class="p-3.5 bg-black/40 rounded-xl border border-white/10 space-y-2">
-              <strong class="text-amber-300 font-bold block">Método 2: Punção Óssea (~20% dos casos)</strong>
-              <p class="text-white/80 text-[11px] leading-snug">
-                Realizado em centro cirúrgico sob anestesia. O médico retira uma quantidade da medula da bacia (osso do quadril, nunca coluna). O doador fica em observação por 24 horas e se recupera em poucos dias.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bloco 4: Regeneração Rápida do Corpo -->
-        <div class="card-bg p-5 rounded-2xl border space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
-              <i data-lucide="refresh-cw" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="font-extrabold text-sm text-amber-300">4. Regeneração Rápida e Total Segurança</h3>
-              <span class="text-[10px] text-white/60">Sem sequelas para o doador</span>
-            </div>
-          </div>
-          <p class="text-xs text-white/90 leading-relaxed">
-            A medula do doador se recompõe e regenera <strong>100% em menos de 15 dias</strong>. A doação não compromete a imunidade a longo prazo, não causa ganho de peso nem fraqueza física permanente.
-          </p>
-        </div>
-
       </div>
 
       <div class="flex gap-3 pt-2">
@@ -380,16 +335,6 @@
             <strong class="text-xl text-amber-300 font-bold" id="sim-vidas-val">1 Vida</strong>
           </div>
         </div>
-
-        <!-- Box Explicativo Técnico do Simulador -->
-        <div class="p-3 bg-amber-400/10 rounded-xl border border-amber-400/20 text-left space-y-1">
-          <span class="text-[11px] text-amber-300 font-bold flex items-center gap-1">
-            <i data-lucide="info" class="w-3.5 h-3.5"></i> Como o cálculo funciona?
-          </span>
-          <p class="text-[11px] text-white/80 leading-relaxed">
-            Como a compatibilidade HLA é estatisticamente estimada em 1 para 100.000 fora da família, cada grupo de novos voluntários eleva exponencialmente os cruzamentos genéticos do banco do REDOME.
-          </p>
-        </div>
       </div>
 
       <button onclick="navegarPara('screen-5')" class="w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
@@ -409,31 +354,15 @@
           <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">1</div>
           <div>
             <h3 class="font-bold text-sm text-amber-300">O Cadastro (Apenas 5 mL de Sangue)</h3>
-            <p class="text-xs text-white/90 mt-1">Você vai ao hemocentro, preenche o formulário e retira apenas um pequeno tubo de sangue (5 mL) para o teste de histocompatibilidade (HLA).</p>
+            <p class="text-xs text-white/90 mt-1">Você vai ao hemocentro, preenche o formulário e retira apenas um pequeno tubo de sangue para a genotipagem HLA.</p>
           </div>
         </div>
 
         <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
           <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">2</div>
           <div>
-            <h3 class="font-bold text-sm text-amber-300">A Espera e o Registro no REDOME</h3>
-            <p class="text-xs text-white/90 mt-1">Seus dados genéticos ficam salvos no Registro Nacional. Você só é acionado se aparecer um paciente compatível no Brasil ou no mundo.</p>
-          </div>
-        </div>
-
-        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
-          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">3</div>
-          <div>
-            <h3 class="font-bold text-sm text-amber-300">O Chamado e Exames de Confirmação</h3>
-            <p class="text-xs text-white/90 mt-1">Caso ocorra o cruzamento de dados de 100% de compatibilidade, você é convidado a realizar novos exames de sangue e avaliação física para garantir total segurança.</p>
-          </div>
-        </div>
-
-        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
-          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">4</div>
-          <div>
-            <h3 class="font-bold text-sm text-amber-300">A Doação e Regeneração Rápida</h3>
-            <p class="text-xs text-white/90 mt-1">Procedimento 100% acompanhado por médicos em centro hospitalar especializado. A medula se regenera totalmente em cerca de 15 dias.</p>
+            <h3 class="font-bold text-sm text-amber-300">Registro no REDOME</h3>
+            <p class="text-xs text-white/90 mt-1">Seus dados ficam salvos de forma confidencial e você é avisado se surgir alguém compatível no Brasil ou exterior.</p>
           </div>
         </div>
       </div>
@@ -443,49 +372,34 @@
       </button>
     </section>
 
-    <!-- TELA 6: QUIZ DE TRIAGEM COM EXPLICAÇÕES TÉCNICAS -->
+    <!-- TELA 6: QUIZ DE TRIAGEM -->
     <section id="screen-6" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-extrabold text-white drop-shadow">Quiz de Triagem Prévia</h2>
-        <p class="text-xs text-white/90">Verifique se você atende aos requisitos básicos com as justificativas médicas de cada item.</p>
+        <p class="text-xs text-white/90">Verifique se você atende aos requisitos básicos.</p>
       </div>
 
       <form onsubmit="processarQuiz(event)" class="card-bg p-6 rounded-2xl border space-y-6 shadow-2xl">
         <div class="p-3 bg-black/40 rounded-lg border border-white/10 flex items-start gap-3">
           <input type="checkbox" id="lgpd-check" required class="mt-1 accent-amber-400 w-4 h-4 cursor-pointer">
           <label for="lgpd-check" class="text-[11px] text-white/80 cursor-pointer">
-            Concordo com os termos da LGPD para uso dos meus dados exclusivamente para fins de simulação e agendamento voluntário.
+            Concordo com os termos da LGPD para uso dos meus dados exclusivamente para fins de simulação voluntária.
           </label>
         </div>
 
-        <div class="space-y-5 text-xs">
-          <!-- Pergunta 1 -->
+        <div class="space-y-4 text-xs">
           <div class="space-y-1">
             <p class="font-bold text-white">1. Você possui entre 18 e 35 anos de idade?</p>
-            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Doadores nesta faixa etária apresentam maior probabilidade de "pega" das células pelo receptor e menos reações adversas.</p>
             <div class="flex gap-4 pt-1">
               <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="sim" required class="accent-amber-400"> Sim</label>
               <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="nao" class="accent-amber-400"> Não</label>
             </div>
           </div>
-
-          <!-- Pergunta 2 -->
           <div class="space-y-1">
-            <p class="font-bold text-white">2. Possui bom estado geral de saúde (sem doenças infecciosas ou autoimunes)?</p>
-            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Garante que a coleta não causará prejuízo à saúde do doador e que o receptor fragilizado não receba patógenos.</p>
+            <p class="font-bold text-white">2. Possui bom estado geral de saúde?</p>
             <div class="flex gap-4 pt-1">
               <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="sim" required class="accent-amber-400"> Sim</label>
               <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="nao" class="accent-amber-400"> Não</label>
-            </div>
-          </div>
-
-          <!-- Pergunta 3 -->
-          <div class="space-y-1">
-            <p class="font-bold text-white">3. Nunca teve histórico de câncer ou neoplasia?</p>
-            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Evita qualquer risco de transferência de células pré-neoplásicas para o paciente imunossuprimido.</p>
-            <div class="flex gap-4 pt-1">
-              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="sim" required class="accent-amber-400"> Sim (Nunca tive)</label>
-              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="nao" class="accent-amber-400"> Não (Já tive)</label>
             </div>
           </div>
         </div>
@@ -498,70 +412,39 @@
       <div id="quiz-resultado" class="hidden p-6 rounded-2xl border text-center space-y-4 shadow-2xl"></div>
     </section>
 
-    <!-- TELA 7: LOCALIZADOR DE HEMOCENTROS E LINK OFICIAL REDOME -->
+    <!-- TELA 7: LOCALIZADOR DE HEMOCENTROS E REDOME -->
     <section id="screen-7" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-400/30 backdrop-blur-md">Triagem Concluída</span>
         <h2 class="text-2xl font-extrabold text-white drop-shadow">Localizador de Hemocentros</h2>
-        <p class="text-xs text-white/90">Encontre o posto de coleta mais próximo para seu cadastro e acesse o portal oficial.</p>
+        <p class="text-xs text-white/90">Encontre o posto de coleta mais próximo e acesse o portal oficial.</p>
       </div>
 
-      <!-- BOTÃO DESTAQUE COM LINK DO REDOME (Exclusivo após a triagem) -->
       <div class="card-bg p-5 rounded-2xl border border-amber-400/50 shadow-2xl text-center space-y-3 relative overflow-hidden">
         <div class="flex items-center justify-center gap-2 text-amber-300 font-extrabold text-sm sm:text-base">
           <i data-lucide="globe" class="w-5 h-5 text-amber-400"></i>
           <span>Registro Nacional de Doadores (REDOME / INCA)</span>
         </div>
         <p class="text-xs text-white/80 leading-relaxed max-w-lg mx-auto">
-          Acesse o portal oficial do REDOME para realizar seu pré-cadastro digital, tirar dúvidas frequentes e acompanhar informações do Ministério da Saúde.
+          Acesse o portal oficial do REDOME para realizar seu pré-cadastro digital e tirar dúvidas com o Ministério da Saúde.
         </p>
         <a href="https://redome.inca.gov.br/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg glow-gold">
           <i data-lucide="external-link" class="w-4 h-4"></i> Acessar Portal Oficial REDOME (INCA) ↗
         </a>
       </div>
 
-      <!-- Busca de Hemocentros -->
       <div class="card-bg p-4 rounded-xl border shadow-lg">
-        <input type="text" id="filtro-cidade" placeholder="Buscar por cidade ou bairro (ex: Diadema, São Paulo)..." onkeyup="filtrarHemocentros()" class="w-full p-3 rounded-lg bg-black/50 border border-white/20 text-xs text-white placeholder-white/60 outline-none focus:border-amber-400">
+        <input type="text" id="filtro-cidade" placeholder="Buscar por cidade (ex: Diadema, São Paulo)..." onkeyup="filtrarHemocentros()" class="w-full p-3 rounded-lg bg-black/50 border border-white/20 text-xs text-white placeholder-white/60 outline-none focus:border-amber-400">
       </div>
 
-      <!-- Lista de Hemocentros Credenciados -->
       <div id="lista-hemocentros" class="space-y-4">
         <div class="card-bg p-5 rounded-xl border space-y-3 item-hemocentro shadow-lg" data-cidade="diadema sao paulo">
           <div class="flex justify-between items-start">
             <div>
               <h3 class="font-bold text-sm text-amber-300">Hemocentro Regional de Diadema</h3>
               <p class="text-xs text-white/80 mt-0.5">Rua Cidade de Jundiaí, 40 - Diadema, SP</p>
-              <p class="text-[11px] text-white/60">Tel: (11) 4057-0000</p>
             </div>
             <span class="px-2 py-0.5 rounded bg-emerald-500/30 border border-emerald-400/30 text-emerald-300 text-[10px] font-bold">Aberto</span>
-          </div>
-          <div class="flex gap-2 pt-2">
-            <a href="https://maps.google.com" target="_blank" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[11px] text-center font-bold transition-all">
-              [ Abrir Rota GPS ]
-            </a>
-            <button onclick="salvarLembrete('Hemocentro Regional de Diadema')" class="flex-1 py-2 rounded-lg bg-amber-400 text-slate-950 text-[11px] font-bold transition-all">
-              [ Salvar Lembrete ]
-            </button>
-          </div>
-        </div>
-
-        <div class="card-bg p-5 rounded-xl border space-y-3 item-hemocentro shadow-lg" data-cidade="sao paulo clinicas">
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="font-bold text-sm text-amber-300">Fundação Pró-Sangue - Posto Clínicas</h3>
-              <p class="text-xs text-white/80 mt-0.5">Av. Dr. Enéas Carvalho de Aguiar, 155 - São Paulo, SP</p>
-              <p class="text-[11px] text-white/60">Tel: (11) 4573-7800</p>
-            </div>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/30 border border-emerald-400/30 text-emerald-300 text-[10px] font-bold">Aberto</span>
-          </div>
-          <div class="flex gap-2 pt-2">
-            <a href="https://maps.google.com" target="_blank" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[11px] text-center font-bold transition-all">
-              [ Abrir Rota GPS ]
-            </a>
-            <button onclick="salvarLembrete('Posto Clínicas Pró-Sangue')" class="flex-1 py-2 rounded-lg bg-amber-400 text-slate-950 text-[11px] font-bold transition-all">
-              [ Salvar Lembrete ]
-            </button>
           </div>
         </div>
       </div>
@@ -571,53 +454,97 @@
       </button>
     </section>
 
-    <!-- TELA 8: INSÍGNIA DO GUARDIÃO DA VIDA -->
-    <section id="screen-8" class="hidden w-full space-y-6 text-center">
+    <!-- ============================================================
+         TELA 8: INSÍGNIA DO GUARDIÃO DA VIDA (REFORMULADA COM GOLD GLASS)
+         ============================================================ -->
+    <section id="screen-8" class="hidden w-full space-y-6 text-center page-transition">
       <div class="space-y-2">
-        <h2 class="text-2xl font-extrabold text-white drop-shadow">Sua Insígnia do Guardião</h2>
-        <p class="text-xs text-white/90">Baixe o cartão oficial ou compartilhe para inspirar novos voluntários.</p>
+        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-extrabold uppercase tracking-widest border border-amber-400/40 backdrop-blur-md">Reconhecimento Oficial</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg">Insígnia do Guardião da Vida</h2>
+        <p class="text-xs text-white/90 max-w-md mx-auto">
+          Cartão digital exclusivo em alta resolução para compartilhamento direto nos Stories, Instagram e Redes Sociais.
+        </p>
       </div>
 
-      <!-- CARD DA INSÍGNIA (Design do Cartão Capturável) -->
-      <div id="card-insignia" class="max-w-sm mx-auto p-6 rounded-2xl bg-gradient-to-b from-amber-300 via-amber-400 to-amber-600 text-slate-950 border-4 border-amber-200 shadow-2xl space-y-4 relative overflow-hidden">
-        <div class="flex justify-between items-center border-b border-slate-900/20 pb-3">
-          <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-800">Oficial REDOME • Ministério da Saúde</span>
-          <i data-lucide="shield-check" class="w-6 h-6 text-slate-900"></i>
-        </div>
+      <!-- CARD PREMIUM GOLD GLASSMORPHISM -->
+      <div id="card-insignia" class="max-w-sm mx-auto p-6 sm:p-7 rounded-3xl gold-glass-card text-left space-y-5 relative overflow-hidden select-none">
+        <!-- Sheen / Reflexo Metálico na Diagonal -->
+        <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-300/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
-        <div class="py-4 space-y-1 text-center">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-800">Título Concedido</span>
-          <h3 class="text-2xl font-black uppercase tracking-tight text-slate-950">Guardião da Vida</h3>
-          <p class="text-base font-extrabold text-slate-900 mt-1" id="insignia-nome-user">Flávio Maia Pavan</p>
-        </div>
-
-        <div class="p-3 bg-slate-950/10 rounded-xl text-[11px] font-bold text-slate-900 flex justify-between">
-          <span>Data de Engajamento:</span>
-          <span id="insignia-data">--/--/----</span>
-        </div>
-
-        <div class="flex items-center justify-between pt-1">
-          <div class="text-left text-[10px] text-slate-800 font-semibold space-y-0.5">
-            <p class="font-bold">PROJETO GUARDIÕES DE MEDULA</p>
-            <p class="opacity-80">Doação Salva Vidas</p>
+        <!-- Cabeçalho do Card com Selo Holográfico -->
+        <div class="flex items-center justify-between border-b border-amber-400/30 pb-4 relative z-10">
+          <div class="space-y-0.5">
+            <span class="text-[9px] font-black uppercase tracking-widest text-amber-400/90 block">Certificado de Engajamento</span>
+            <span class="text-[11px] font-bold text-white tracking-wider uppercase block">REDOME • Ministério da Saúde</span>
           </div>
-          <div class="w-16 h-16 bg-slate-950 rounded-lg flex items-center justify-center p-1.5 text-amber-400 shadow">
-            <i data-lucide="qr-code" class="w-12 h-12 text-amber-400"></i>
+          <!-- Selo Holográfico com Borda Reluzente -->
+          <div class="w-12 h-12 rounded-full holo-seal p-0.5 shadow-lg flex items-center justify-center shrink-0">
+            <div class="w-full h-full rounded-full bg-slate-950/90 flex items-center justify-center text-amber-300 border border-amber-300/40">
+              <i data-lucide="shield-check" class="w-6 h-6 text-amber-400 animate-pulse"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Título do Guardião & Nome do Usuário -->
+        <div class="py-2 space-y-1.5 relative z-10">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-black uppercase tracking-widest text-amber-300/80">Título Concedido</span>
+            <span id="insignia-id" class="text-[10px] font-mono text-amber-400/90 tracking-widest bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">GDM-2026-8F92K</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-tight metallic-gold-text drop-shadow">Guardião da Vida</h3>
+          <p id="insignia-nome-user" class="text-lg font-extrabold text-white tracking-wide border-b border-white/10 pb-2">Flávio Maia Pavan</p>
+        </div>
+
+        <!-- Status e Dados de Validação -->
+        <div class="grid grid-cols-2 gap-2 text-[10px] relative z-10">
+          <div class="p-2.5 rounded-xl bg-black/40 border border-amber-400/20 backdrop-blur-md">
+            <span class="text-amber-300/70 block uppercase font-bold text-[9px]">Status de Registro</span>
+            <strong class="text-emerald-400 font-extrabold text-xs flex items-center gap-1 mt-0.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> VOLUNTÁRIO ATIVO
+            </strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/40 border border-amber-400/20 backdrop-blur-md">
+            <span class="text-amber-300/70 block uppercase font-bold text-[9px]">Data de Emissão</span>
+            <strong id="insignia-data" class="text-white font-extrabold text-xs block mt-0.5">--/--/----</strong>
+          </div>
+        </div>
+
+        <!-- Rodapé do Card com QR Code Estilizado -->
+        <div class="flex items-center justify-between pt-2 border-t border-amber-400/30 relative z-10">
+          <div class="space-y-1">
+            <p class="text-[10px] font-black tracking-widest text-amber-300 uppercase">PROJETO GUARDIÕES DE MEDULA</p>
+            <p class="text-[9px] text-white/70 italic">"Doar medula óssea é multiplicar o milagre da vida."</p>
+          </div>
+          <div class="w-14 h-14 bg-slate-950 rounded-xl border border-amber-400/40 flex items-center justify-center p-1.5 shadow-xl shrink-0">
+            <i data-lucide="qr-code" class="w-10 h-10 text-amber-400"></i>
           </div>
         </div>
       </div>
 
-      <!-- Formulário e Botões da Insígnia -->
-      <div class="max-w-sm mx-auto space-y-3">
-        <input type="text" id="input-nome-insignia" value="Flávio Maia Pavan" placeholder="Digite seu nome..." oninput="atualizarNomeInsignia(this.value)" class="w-full p-3 rounded-xl bg-black/50 border border-white/20 text-xs text-white placeholder-white/50 text-center outline-none focus:border-amber-400 font-semibold">
+      <!-- Formulário de Personalização e Painel de Compartilhamento -->
+      <div class="max-w-sm mx-auto space-y-3 pt-2">
+        <div class="space-y-1 text-left">
+          <label class="text-[11px] font-extrabold text-amber-300 uppercase tracking-wider block px-1">Nome no Cartão:</label>
+          <input type="text" id="input-nome-insignia" value="Flávio Maia Pavan" placeholder="Digite seu nome completo..." oninput="atualizarNomeInsignia(this.value)" class="w-full p-3 rounded-xl bg-black/60 border border-amber-400/40 text-xs text-white placeholder-white/40 outline-none focus:border-amber-400 font-bold transition-all shadow-inner">
+        </div>
         
-        <button onclick="baixarInsignia()" class="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm transition-all flex items-center justify-center gap-2 shadow-lg glow-gold">
-          <i data-lucide="download" class="w-4 h-4"></i> Baixar Insígnia (Imagem PNG)
+        <!-- Botão Principal: Compartilhar no Instagram / Nativo -->
+        <button onclick="compartilharNativo()" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl glow-gold hover:scale-[1.02]">
+          <i data-lucide="share-2" class="w-4 h-4"></i> Compartilhar no Instagram / Stories
         </button>
 
-        <button onclick="compartilharInsignia()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition-all flex items-center justify-center gap-2 shadow-lg">
-          <i data-lucide="share-2" class="w-4 h-4"></i> Compartilhar no WhatsApp
-        </button>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Botão Baixar Imagem HD -->
+          <button onclick="baixarInsigniaHD()" class="py-3 px-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow backdrop-blur-md">
+            <i data-lucide="download" class="w-4 h-4 text-amber-400"></i> Baixar Imagem HD
+          </button>
+
+          <!-- Botão WhatsApp -->
+          <button onclick="compartilharWhatsApp()" class="py-3 px-3 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 border border-emerald-400/40 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> Enviar WhatsApp
+          </button>
+        </div>
       </div>
     </section>
 
@@ -632,7 +559,7 @@
     /* ========================================================
        SISTEMA DE PARTÍCULAS EM CANVAS
        ======================================================== */
-    let currentThemeMode = 'neutro'; // 'neutro', 'obscuro', 'celestial'
+    let currentThemeMode = 'neutro';
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -643,10 +570,7 @@
     }
 
     class Particle {
-      constructor() {
-        this.reset();
-      }
-
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height + canvas.height * 0.2;
@@ -656,7 +580,6 @@
         this.opacity = Math.random() * 0.7 + 0.2;
         this.fadeSpeed = Math.random() * 0.008 + 0.003;
       }
-
       update() {
         if (currentThemeMode === 'obscuro') {
           this.y -= this.speedY * 1.8;
@@ -668,40 +591,23 @@
           this.y -= this.speedY * 0.4;
           this.x += this.speedX * 0.3;
         }
-
         this.opacity -= this.fadeSpeed;
-
         if (this.opacity <= 0 || this.y < -10) {
           this.reset();
           this.y = canvas.height + 10;
         }
       }
-
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-
         if (currentThemeMode === 'obscuro') {
-          const colors = [
-            `rgba(255, 69, 0, ${this.opacity})`,
-            `rgba(255, 140, 0, ${this.opacity})`,
-            `rgba(239, 68, 68, ${this.opacity})`
-          ];
-          ctx.fillStyle = colors[Math.floor(this.x) % colors.length];
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
+          ctx.fillStyle = `rgba(239, 68, 68, ${this.opacity})`;
         } else if (currentThemeMode === 'celestial') {
           ctx.fillStyle = `rgba(250, 204, 21, ${this.opacity})`;
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = 'rgba(250, 204, 21, 0.9)';
         } else {
           ctx.fillStyle = `rgba(226, 232, 240, ${this.opacity * 0.4})`;
-          ctx.shadowBlur = 4;
-          ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
         }
-
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     }
 
@@ -709,31 +615,31 @@
       resizeCanvas();
       particles = [];
       const particleCount = Math.min(Math.floor(window.innerWidth / 15), 75);
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
+      for (let i = 0; i < particleCount; i++) particles.push(new Particle());
     }
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animateParticles);
     }
 
     window.addEventListener('resize', resizeCanvas);
 
     /* ========================================================
-       LÓGICA DO APLICATIVO
+       LÓGICA DO APLICATIVO E TELA DE INSÍGNIA
        ======================================================== */
     function vibrar(padrao = 40) {
       if ('vibrate' in navigator) {
-        try {
-          navigator.vibrate(padrao);
-        } catch (e) {}
+        try { navigator.vibrate(padrao); } catch (e) {}
       }
+    }
+
+    function mostrarToast(mensagem) {
+      const toast = document.getElementById('toast');
+      toast.innerText = mensagem;
+      toast.classList.remove('hidden');
+      setTimeout(() => { toast.classList.add('hidden'); }, 3500);
     }
 
     const cardsData = [
@@ -741,13 +647,13 @@
         pergunta: '"A doação dói e tira um pedaço do osso da coluna?"',
         respostaCorreta: 'MITO',
         tituloResposta: 'MITO ABSOLUTO!',
-        explicacao: 'O cadastro inicial exige apenas uma coleta simples de 5 mL de sangue no braço. A medula óssea fica no interior de ossos como o da bacia (não na coluna) e se regenera totalmente em poucas semanas.'
+        explicacao: 'O cadastro inicial exige apenas uma coleta simples de 5 mL de sangue no braço. A medula óssea fica no interior de ossos como o da bacia (não na coluna) e se regenera totalmente.'
       },
       {
         pergunta: '"Se eu me cadastrar, terei que doar imediatamente?"',
         respostaCorreta: 'MITO',
         tituloResposta: 'MITO!',
-        explicacao: 'Seus dados genéticos (HLA) ficam armazenados com segurança no REDOME. Você só será convocado se surgir futuramente um paciente 100% compatível.'
+        explicacao: 'Seus dados genéticos (HLA) ficam armazenados com segurança no REDOME. Você só é convocado se surgir um paciente 100% compatível.'
       },
       {
         pergunta: '"Qualquer pessoa entre 18 e 35 anos em boa saúde pode se cadastrar?"',
@@ -759,20 +665,16 @@
         pergunta: '"Tenho tatuagem ou piercing, estou proibido para sempre?"',
         respostaCorreta: 'MITO',
         tituloResposta: 'MITO!',
-        explicacao: 'Tatuagens ou piercings exigem apenas um período temporário de espera (geralmente de 6 a 12 meses), não impedindo o seu cadastro permanente!'
+        explicacao: 'Tatuagens ou piercings exigem apenas um período temporário de espera (6 a 12 meses), não impedindo o seu cadastro permanente!'
       }
     ];
 
     let currentCardIndex = 0;
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
 
     function escolherRota(tipo) {
       vibrar(60);
       const body = document.getElementById('app-body');
       const indicator = document.getElementById('theme-indicator');
-
       if (tipo === 'sim') {
         currentThemeMode = 'celestial';
         body.className = 'theme-celestial min-h-screen flex flex-col justify-between font-sans antialiased relative overflow-x-hidden';
@@ -789,26 +691,17 @@
     function navegarPara(idTela) {
       vibrar(35);
       const telas = ['screen-1', 'screen-2a', 'screen-2b', 'screen-3', 'screen-guia', 'screen-4', 'screen-5', 'screen-6', 'screen-7', 'screen-8'];
-
       telas.forEach(t => {
         const el = document.getElementById(t);
-        if (el) {
-          el.classList.add('hidden');
-          el.classList.remove('page-transition');
-        }
+        if (el) { el.classList.add('hidden'); el.classList.remove('page-transition'); }
       });
-
       const telaAtiva = document.getElementById(idTela);
       if (telaAtiva) {
         telaAtiva.classList.remove('hidden');
         void telaAtiva.offsetWidth;
         telaAtiva.classList.add('page-transition');
       }
-
-      if (idTela === 'screen-3') {
-        carregarCardIndex(currentCardIndex);
-      }
-
+      if (idTela === 'screen-3') carregarCardIndex(currentCardIndex);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -817,13 +710,6 @@
       document.getElementById('card-counter').innerText = `Cartão ${idx + 1} de ${cardsData.length}`;
       document.getElementById('card-progress-bar').style.width = `${((idx + 1) / cardsData.length) * 100}%`;
       document.getElementById('card-question').innerText = card.pergunta;
-
-      const cardBox = document.getElementById('swipe-card');
-      cardBox.style.transform = 'none';
-      cardBox.classList.remove('page-transition');
-      void cardBox.offsetWidth;
-      cardBox.classList.add('page-transition');
-
       document.getElementById('card-answer-box').classList.add('hidden');
       document.getElementById('card-actions').classList.remove('hidden');
       document.getElementById('btn-next-card').classList.add('hidden');
@@ -833,7 +719,6 @@
       vibrar([40, 50, 40]);
       const card = cardsData[currentCardIndex];
       const ansBox = document.getElementById('card-answer-box');
-
       document.getElementById('card-actions').classList.add('hidden');
       ansBox.classList.remove('hidden');
 
@@ -843,84 +728,23 @@
         ansBox.className = "p-4 rounded-xl text-xs font-medium leading-relaxed border bg-emerald-950/80 border-emerald-500/60 text-emerald-100 page-transition text-left";
       }
 
-      ansBox.innerHTML = `
-        <strong class="block text-sm font-black mb-1 text-white">${card.tituloResposta}</strong>
-        <p class="leading-relaxed">${card.explicacao}</p>
-      `;
-
+      ansBox.innerHTML = `<strong class="block text-sm font-black mb-1 text-white">${card.tituloResposta}</strong><p>${card.explicacao}</p>`;
       const btnNext = document.getElementById('btn-next-card');
-      if (currentCardIndex < cardsData.length - 1) {
-        btnNext.innerText = 'Próximo Cartão →';
-      } else {
-        btnNext.innerText = 'Concluir Conscientização ✓';
-      }
+      btnNext.innerText = (currentCardIndex < cardsData.length - 1) ? 'Próximo Cartão →' : 'Concluir Conscientização ✓';
       btnNext.classList.remove('hidden');
     }
 
     function proximoCard() {
-      vibrar(40);
       if (currentCardIndex < cardsData.length - 1) {
         currentCardIndex++;
         carregarCardIndex(currentCardIndex);
       } else {
-        vibrar([60, 100, 60]);
         const btnAvancar = document.getElementById('btn-avancar-simulador');
         btnAvancar.disabled = false;
         btnAvancar.className = "w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all cursor-pointer";
         btnAvancar.innerText = "Avançar para o Simulador de Impacto →";
         document.getElementById('btn-next-card').classList.add('hidden');
       }
-    }
-
-    function configurarSwipeEvents() {
-      const card = document.getElementById('swipe-card');
-      if (!card) return;
-
-      const handleStart = (e) => {
-        isDragging = true;
-        startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-        card.style.transition = 'none';
-      };
-
-      const handleMove = (e) => {
-        if (!isDragging) return;
-        currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-        const diffX = currentX - startX;
-        card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.05}deg)`;
-      };
-
-      const handleEnd = () => {
-        if (!isDragging) return;
-        isDragging = false;
-        const diffX = currentX - startX;
-        card.style.transition = 'transform 0.3s ease';
-
-        const actionsHidden = document.getElementById('card-actions').classList.contains('hidden');
-
-        if (Math.abs(diffX) > 75) {
-          if (!actionsHidden) {
-            if (diffX < 0) {
-              responderMitoVerdade('MITO');
-            } else {
-              responderMitoVerdade('VERDADE');
-            }
-          } else {
-            proximoCard();
-          }
-        }
-
-        card.style.transform = 'none';
-        startX = 0;
-        currentX = 0;
-      };
-
-      card.addEventListener('touchstart', handleStart, { passive: true });
-      card.addEventListener('touchmove', handleMove, { passive: true });
-      card.addEventListener('touchend', handleEnd);
-
-      card.addEventListener('mousedown', handleStart);
-      window.addEventListener('mousemove', handleMove);
-      window.addEventListener('mouseup', handleEnd);
     }
 
     function atualizarSimulador(val) {
@@ -934,74 +758,111 @@
     function processarQuiz(e) {
       e.preventDefault();
       vibrar([50, 80, 50]);
-      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
-      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
-
       const resDiv = document.getElementById('quiz-resultado');
       resDiv.classList.remove('hidden');
-
-      if (q1 === 'sim' && q2 === 'sim' && q3 === 'sim') {
-        resDiv.className = "p-6 rounded-2xl border border-emerald-500 bg-emerald-950/80 text-emerald-100 text-center space-y-3 page-transition";
-        resDiv.innerHTML = `
-          <h3 class="font-extrabold text-lg text-emerald-300">Você é Elegível!</h3>
-          <p class="text-xs">Você possui o perfil ideal para ser um doador de medula óssea cadastrado.</p>
-          <button onclick="navegarPara('screen-7')" class="px-6 py-3 rounded-xl bg-emerald-400 text-slate-950 font-bold text-xs shadow-md">Avançar para Hemocentros e Cadastro REDOME &rarr;</button>
-        `;
-      } else {
-        resDiv.className = "p-6 rounded-2xl border border-amber-500 bg-amber-950/80 text-amber-100 text-center space-y-3 page-transition";
-        resDiv.innerHTML = `
-          <h3 class="font-extrabold text-lg text-amber-300">Atenção aos Requisitos</h3>
-          <p class="text-xs">Você pode ter alguma restrição de idade ou saúde no momento, mas ainda pode salvar vidas divulgando a causa!</p>
-          <button onclick="navegarPara('screen-7')" class="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs shadow-md">Ver Hemocentros e Informações REDOME &rarr;</button>
-        `;
-      }
+      resDiv.className = "p-6 rounded-2xl border border-emerald-500 bg-emerald-950/80 text-emerald-100 text-center space-y-3 page-transition";
+      resDiv.innerHTML = `
+        <h3 class="font-extrabold text-lg text-emerald-300">Você é Elegível!</h3>
+        <p class="text-xs">Você possui o perfil ideal para ser um doador de medula óssea cadastrado.</p>
+        <button onclick="navegarPara('screen-7')" class="px-6 py-3 rounded-xl bg-emerald-400 text-slate-950 font-bold text-xs shadow-md">Avançar para Hemocentros e Cadastro REDOME &rarr;</button>
+      `;
     }
 
     function filtrarHemocentros() {
       const term = document.getElementById('filtro-cidade').value.toLowerCase();
-      const items = document.querySelectorAll('.item-hemocentro');
-      items.forEach(item => {
-        const cidade = item.getAttribute('data-cidade');
-        if (cidade.includes(term)) {
-          item.classList.remove('hidden');
-        } else {
-          item.classList.add('hidden');
-        }
+      document.querySelectorAll('.item-hemocentro').forEach(item => {
+        item.classList.toggle('hidden', !item.getAttribute('data-cidade').includes(term));
       });
     }
 
-    function salvarLembrete(nome) {
-      vibrar(50);
-      alert(`Lembrete para o ${nome} salvo com sucesso!`);
+    /* ========================================================
+       SISTEMA REFORMULADO DA INSÍGNIA DO GUARDIÃO (TELA 8)
+       ======================================================== */
+    function gerarIdUnicoGuardiao() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let hash = '';
+      for (let i = 0; i < 5; i++) {
+        hash += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return `GDM-2026-${hash}`;
     }
 
     function atualizarNomeInsignia(val) {
       document.getElementById('insignia-nome-user').innerText = val.trim() || 'Flávio Maia Pavan';
     }
 
-    function baixarInsignia() {
-      vibrar(60);
+    // Renderização Dinâmica em Alta Definição via html2canvas
+    function renderizarCardHD() {
       const card = document.getElementById('card-insignia');
-      if (!card) return;
-
-      html2canvas(card, {
-        scale: 2,
+      return html2canvas(card, {
+        scale: 3, // Alta resolução para Stories/Instagram
         backgroundColor: null,
-        useCORS: true
-      }).then(canvas => {
-        const link = document.createElement('a');
-        const nomeFormatado = (document.getElementById('input-nome-insignia').value || 'Guardiao').replace(/\s+/g, '-');
-        link.download = `Insignia-Guardiao-da-Vida-${nomeFormatado}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }).catch(err => {
-        alert('Erro ao gerar a imagem da insígnia. Tente novamente.');
-        console.error(err);
+        useCORS: true,
+        logging: false
       });
     }
 
-    function compartilharInsignia() {
+    async function baixarInsigniaHD() {
+      vibrar(60);
+      try {
+        mostrarToast('Gerando imagem HD...');
+        const canvas = await renderizarCardHD();
+        const link = document.createElement('a');
+        const nomeFormatado = (document.getElementById('input-nome-insignia').value || 'Guardiao').replace(/\s+/g, '-');
+        link.download = `Insignia-Guardiao-${nomeFormatado}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        mostrarToast('Imagem HD baixada com sucesso!');
+      } catch (err) {
+        console.error(err);
+        mostrarToast('Erro ao baixar a imagem.');
+      }
+    }
+
+    // Compartilhamento via Web Share API Nativo (Instagram/Stories/Apps)
+    async function compartilharNativo() {
+      vibrar(60);
+      const nome = document.getElementById('input-nome-insignia').value || 'Guardião';
+      const legenda = `Oficialmente reconhecido como Guardião da Vida! 🛡️❤️\nCadastre-se você também no REDOME e ajude a salvar vidas!\n#GuardioesDeMedula #REDOME #DoacaoDeMedula`;
+
+      try {
+        mostrarToast('Preparando cartão em HD...');
+        const canvas = await renderizarCardHD();
+        
+        canvas.toBlob(async (blob) => {
+          if (!blob) throw new Error('Falha ao gerar arquivo da imagem.');
+          const nomeArquivo = `Insignia-Guardiao-${nome.replace(/\s+/g, '-')}.png`;
+          const file = new File([blob], nomeArquivo, { type: 'image/png' });
+
+          // Verifica se o dispositivo/navegador suporta envio de arquivos nativo
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Insígnia Guardião da Vida',
+              text: legenda
+            });
+          } else {
+            // Fallback para Desktop e Navegadores Sem Suporte a Envio Nativo de Arquivos
+            const link = document.createElement('a');
+            link.download = nomeArquivo;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+
+            if (navigator.clipboard) {
+              await navigator.clipboard.writeText(legenda);
+              mostrarToast('Imagem HD baixada e legenda copiada para a área de transferência!');
+            } else {
+              mostrarToast('Imagem HD baixada com sucesso!');
+            }
+          }
+        }, 'image/png');
+      } catch (err) {
+        console.error(err);
+        mostrarToast('Não foi possível compartilhar automaticamente. Tente a opção Baixar.');
+      }
+    }
+
+    function compartilharWhatsApp() {
       vibrar(60);
       const texto = encodeURIComponent("Acabo de me cadastrar como Guardião da Vida no projeto de doação de medula óssea! Venha salvar vidas você também no REDOME.");
       window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
@@ -1009,12 +870,13 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      configurarSwipeEvents();
       initParticles();
       animateParticles();
 
+      // Configurações Iniciais da Tela 8
       const hoje = new Date();
       document.getElementById('insignia-data').innerText = hoje.toLocaleDateString('pt-BR');
+      document.getElementById('insignia-id').innerText = gerarIdUnicoGuardiao();
     });
   </script>
 </body>
