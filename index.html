@@ -137,10 +137,10 @@
         <span>Portal REDOME</span>
       </a>
 
-      <!-- Botão Guia -->
+      <!-- Botão Guia Explicativo -->
       <button onclick="navegarPara('screen-guia')" class="px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow">
         <i data-lucide="book-open-check" class="w-3.5 h-3.5"></i>
-        <span class="hidden sm:inline">Guia</span>
+        <span class="hidden sm:inline">Guia Científico</span>
       </button>
 
       <span id="theme-indicator" class="px-2.5 py-1 rounded-full bg-white/20 text-[10px] uppercase font-bold tracking-widest border border-white/20 shadow text-white">Tema Neutro</span>
@@ -170,12 +170,16 @@
         </button>
       </div>
       
-      <div class="pt-2 flex flex-col items-center gap-2">
-        <button onclick="navegarPara('screen-guia')" class="text-xs text-amber-300/80 hover:text-amber-300 underline font-semibold transition-all flex items-center justify-center gap-1">
-          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Quero entender o processo científico antes
+      <!-- LINKS E BOTÕES RESTAURADOS DA TELA 1 -->
+      <div class="pt-4 flex flex-col items-center gap-3">
+        <button onclick="navegarPara('screen-guia')" class="text-xs text-amber-300 font-extrabold hover:text-amber-200 underline transition-all flex items-center justify-center gap-2 bg-black/50 px-5 py-2.5 rounded-full border border-amber-400/40 shadow-lg hover:scale-102">
+          <i data-lucide="book-open-check" class="w-4 h-4 text-amber-400"></i>
+          <span>Quero entender melhor o processo científico antes de responder</span>
         </button>
-        <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="text-xs text-emerald-300/90 hover:text-emerald-200 font-bold flex items-center gap-1 bg-emerald-950/40 px-3 py-1.5 rounded-full border border-emerald-500/30">
-          <i data-lucide="globe" class="w-3.5 h-3.5"></i> Visitar site oficial do Governo REDOME / INCA
+
+        <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="text-xs text-emerald-300 hover:text-emerald-200 font-bold flex items-center gap-1.5 bg-emerald-950/60 px-4 py-2 rounded-full border border-emerald-500/40 transition-all">
+          <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+          <span>Visitar site oficial do Governo REDOME / INCA</span>
         </a>
       </div>
     </section>
@@ -199,6 +203,13 @@
           <button onclick="escolherRota('sim')" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-extrabold text-sm glow-gold hover:scale-105 transition-all">
             [ AINDA DÁ TEMPO DE SALVAR UMA VIDA ]
           </button>
+
+          <!-- BOTÃO RESTAURADO: Acessar a Central Explicativa Científica -->
+          <button onclick="navegarPara('screen-guia')" class="w-full py-3.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/50 text-amber-300 font-extrabold text-xs flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="microscope" class="w-4 h-4"></i>
+            <span>Acessar a Central Explicativa científica</span>
+          </button>
+
           <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="w-full py-3 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-400/40 text-emerald-200 font-bold text-xs flex items-center justify-center gap-2 transition-all">
             <i data-lucide="external-link" class="w-4 h-4"></i> Acessar Portal Oficial REDOME (INCA)
           </a>
@@ -220,6 +231,13 @@
           <button onclick="navegarPara('screen-3')" class="w-full py-4 rounded-xl bg-white text-slate-900 font-extrabold text-sm hover:bg-amber-100 shadow-lg transition-all">
             [ COMPREENDER O PROCESSO - INTERATIVO ]
           </button>
+
+          <!-- BOTÃO RESTAURADO: Acessar a Central Explicativa Científica -->
+          <button onclick="navegarPara('screen-guia')" class="w-full py-3.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/50 text-amber-300 font-extrabold text-xs flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="microscope" class="w-4 h-4"></i>
+            <span>Acessar a Central Explicativa científica</span>
+          </button>
+
           <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="w-full py-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs transition-all border border-emerald-400/40 flex items-center justify-center gap-2">
             <i data-lucide="globe" class="w-4 h-4"></i> Visitar Site do Governo REDOME
           </a>
@@ -282,15 +300,17 @@
       </div>
     </section>
 
-    <!-- TELA GUIA: CENTRAL EXPLICATIVA -->
+    <!-- TELA GUIA: CENTRAL EXPLICATIVA COMPLETA (RESTAURADA NA ÍNTEGRA) -->
     <section id="screen-guia" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Base de Conhecimento Matriz</span>
-        <h2 class="text-2xl font-extrabold text-white drop-shadow">Guia Explicativo Completo</h2>
-        <p class="text-xs text-white/90">Entenda a ciência, os conceitos biológicos e o passo a passo definitivo da doação.</p>
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Guia Explicativo Completo & Científico</h2>
+        <p class="text-xs text-white/90 max-w-lg mx-auto">Entenda a ciência por trás da doação, os conceitos biológicos e o procedimento real detalhado.</p>
       </div>
 
+      <!-- PAINEL CIENTÍFICO COMPLETO INTEGRAL -->
       <div class="space-y-4">
+        <!-- 1. MEDULA ÓSSEA X COLUNA VERTEBRAL -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -302,10 +322,11 @@
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. Nela são produzidas as células-tronco hematopoéticas. <strong>Nenhum procedimento encosta na coluna vertebral!</strong>
+            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. Nela são produzidas as células-tronco hematopoéticas (hemácias, leucócitos e plaquetas). <strong>Nenhum procedimento de doação encosta na coluna vertebral ou no sistema nervoso!</strong>
           </p>
         </div>
 
+        <!-- 2. COMPATIBILIDADE HLA -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -317,21 +338,93 @@
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            A compatibilidade para transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. O HLA possui milhões de combinações possíveis. Na população geral, a chance de encontrar compatibilidade é de 1 em 100 mil, por isso o REDOME necessita do maior número de voluntários cadastrados.
+            A compatibilidade para o transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Como o HLA possui milhões de combinações possíveis na espécie humana, encontrar um doador compatível fora da família direta é como achar um "gêmeo genético". Por isso, quanto mais voluntários cadastrados no REDOME, maior a chance de salvar pacientes com leucemias severas.
           </p>
         </div>
 
-        <div class="p-4 bg-emerald-950/60 rounded-2xl border border-emerald-500/40 text-center space-y-2">
-          <span class="text-xs font-bold text-emerald-300">Quer saber mais no site oficial do governo?</span>
-          <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="block w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition-all shadow">
-            🌐 Acessar Portal Oficial REDOME / INCA
+        <!-- 3. COMO É FEITO O CADASTRO -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="syringe" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">3. Como funciona o Cadastro Inicial?</h3>
+              <span class="text-[10px] text-white/60">Apenas 5 mL de Sangue</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            Para se cadastrar, você não doa medula imediatamente. Você apenas comparece a um hemocentro, preenche uma ficha com dados de contato e colhe apenas <strong>5 mL de sangue</strong> (um pequeno tubinho). Esse sangue vai para laboratório para realizar o exame de histocompatibilidade (HLA) e seus dados ficam salvos de forma confidencial no registro nacional.
+          </p>
+        </div>
+
+        <!-- 4. MÉTODOS DE DOAÇÃO -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="activity" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">4. Como é feita a doação se houver compatibilidade?</h3>
+              <span class="text-[10px] text-white/60">Procedimento Seguro e Escolhido pelos Médicos</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            Existem duas formas seguras de doação, definidas pelos médicos conforme a necessidade do paciente:
+          </p>
+          <ul class="text-xs text-white/80 space-y-1.5 list-disc pl-4">
+            <li><strong>Aférese (Mais comum):</strong> O doador toma um medicamento por 5 dias que estimula as células-tronco a irem para a corrente sanguínea. A coleta é feita diretamente pelas veias do braço em uma máquina própria, sem anestesia e sem cirurgia.</li>
+            <li><strong>Punção Ilíaca:</strong> Realizada em centro cirúrgico sob anestesia (geral ou peridural). Retira-se a medula do osso da bacia (quadril) com agulhas apropriadas. O doador não sente nada durante o processo e retorna para casa no dia seguinte.</li>
+          </ul>
+        </div>
+
+        <!-- 5. REGENERAÇÃO RÁPIDA -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">5. Regeneração Celular e Recuperação</h3>
+              <span class="text-[10px] text-white/60">Recomposição Total pelo Organismo</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            A medula óssea do doador se recompoe integralmente em apenas <strong>15 dias (poucas semanas)</strong>. O procedimento não causa nenhum prejuízo à saúde do doador a longo prazo e salva diretamente a vida do receptor.
+          </p>
+        </div>
+
+        <!-- 6. QUEM PODE DOAR -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">6. Requisitos Principais para Doar</h3>
+              <span class="text-[10px] text-white/60">Regras Oficiais do Ministério da Saúde</span>
+            </div>
+          </div>
+          <ul class="text-xs text-white/90 space-y-1 list-disc pl-4">
+            <li>Ter entre <strong>18 e 35 anos de idade</strong> no momento do cadastro.</li>
+            <li>Estar em bom estado geral de saúde (sem doenças infecciosas graves ou ativas).</li>
+            <li>Apresentar documento de identificação oficial com foto.</li>
+            <li>Tatuagem ou piercing exigem apenas um período temporário de carência (6 a 12 meses).</li>
+          </ul>
+        </div>
+
+        <!-- BOX PORTAL GOVERNO REDOME -->
+        <div class="p-4 bg-emerald-950/80 rounded-2xl border border-emerald-500/50 text-center space-y-2">
+          <span class="text-xs font-extrabold text-emerald-300 block">Consulte as Orientações Oficiais do Governo</span>
+          <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="block w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition-all shadow-lg">
+            🌐 Acessar Portal Oficial REDOME / INCA (redome.inca.gov.br)
           </a>
         </div>
       </div>
 
       <div class="flex gap-3 pt-2">
         <button onclick="navegarPara('screen-3')" class="flex-1 py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
-          Ir para os Testes &rarr;
+          Iniciar Teste de Conhecimento &rarr;
         </button>
       </div>
     </section>
@@ -725,6 +818,11 @@
         carregarCardIndex(currentCardIndex);
       }
 
+      // Re-inicializa ícones da Lucide para garantir exibição
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -923,7 +1021,6 @@
       const cardElement = document.getElementById('insignia-card-container');
 
       try {
-        // Gera a imagem PNG em alta definição do Card
         const canvasImage = await html2canvas(cardElement, {
           scale: 2,
           backgroundColor: null,
@@ -933,7 +1030,6 @@
         canvasImage.toBlob(async (blob) => {
           const file = new File([blob], 'insignia_guardiao_medula.png', { type: 'image/png' });
 
-          // Se o dispositivo suportar compartilhamento de arquivo via Web Share API (Mobile iOS/Android)
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             try {
               await navigator.share({
@@ -945,7 +1041,6 @@
               console.log('Compartilhamento cancelado.');
             }
           } else {
-            // Fallback para Desktop: Baixa a imagem HD e orienta o usuário
             baixarInsigniaPNG();
             alert('📸 Imagem da Insígnia gerada em HD e salva nos seus Downloads!\n\nAgora basta abrir o Instagram e postar no seu Stories ou Feed!');
           }
@@ -960,7 +1055,7 @@
       vibrar(50);
       const cardElement = document.getElementById('insignia-card-container');
       const canvasImage = await html2canvas(cardElement, {
-        scale: 3, // Qualidade HD
+        scale: 3,
         backgroundColor: null,
         useCORS: true
       });
