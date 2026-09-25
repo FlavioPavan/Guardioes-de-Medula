@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Guardiões de Medula - App Matriz</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Transição global para background e cores */
+    body {
+      transition: background-image 0.8s ease-in-out,
+                  background-color 0.8s ease-in-out,
+                  color 0.5s ease;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* ============================================================
+       TEMA NEUTRO (Padrão Inicial)
+       ============================================================ */
+    body.theme-neutro {
+      background-color: #0f172a;
+      background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.65), rgba(2, 6, 23, 0.85)),
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
+      color: #f8fafc;
+    }
+
+    /* ============================================================
+       TEMA OBSCURO (Rota Não - Inferno / Umbral)
+       ============================================================ */
+    body.theme-obscuro {
+      background-color: #0a0203;
+      background-image: linear-gradient(to bottom, rgba(15, 2, 4, 0.55), rgba(0, 0, 0, 0.88)),
+                        url('https://cdn.fatosdesconhecidos.com.br/wp-content/uploads/2015/05/1105-scaled.jpg');
+      color: #fecdd3;
+    }
+    .theme-obscuro .card-bg {
+      background-color: rgba(20, 5, 8, 0.92);
+      backdrop-filter: blur(18px);
+      border-color: #991b1b;
+      box-shadow: 0 0 50px rgba(153, 27, 27, 0.6),
+                  inset 0 0 30px rgba(239, 68, 68, 0.1);
+    }
+
+    /* ============================================================
+       TEMA CELESTIAL (Rota Sim - Pintura Renascentista / Luz Divina)
+       ============================================================ */
+    body.theme-celestial {
+      background-color: #1e3a8a;
+      background-image: linear-gradient(to bottom, rgba(30, 58, 138, 0.25), rgba(12, 74, 110, 0.55)),
+                        url('https://static.uwalls.com.br/products/107000/107622/w08137p.jpg');
+      color: #f0f9ff;
+    }
+    .theme-celestial .card-bg {
+      background-color: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(18px);
+      border-color: rgba(253, 224, 71, 0.55);
+      box-shadow: 0 0 55px rgba(253, 224, 71, 0.35),
+                  inset 0 0 25px rgba(250, 204, 21, 0.08);
+    }
+
+    .glow-gold {
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
+    }
+
+    /* ============================================================
+       ANIMAÇÃO DE ENTRADA DE TELAS
+       ============================================================ */
+    .page-transition {
+      animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.97) translateY(10px);
+        filter: blur(6px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+      }
+    }
+
+    /* Suporte ao gesto de arrastar */
+    #swipe-card {
+      touch-action: pan-y;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body id="app-body" class="theme-neutro min-h-screen flex flex-col justify-between font-sans antialiased relative overflow-x-hidden">
+
+  <!-- Canvas de Partículas Flutuantes -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Header Global -->
+  <header class="w-full max-w-4xl mx-auto px-4 py-4 flex items-center justify-between border-b border-white/20 backdrop-blur-md bg-black/40 rounded-b-xl relative z-10">
+    <div class="flex items-center gap-2 cursor-pointer" onclick="navegarPara('screen-1')">
+      <i data-lucide="shield-heart" class="w-7 h-7 text-amber-400"></i>
+      <span class="font-extrabold tracking-wider text-sm sm:text-base uppercase text-white drop-shadow">Guardiões de Medula</span>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <!-- Botão de Acesso Rápido à Central Explicativa Matriz -->
+      <button onclick="navegarPara('screen-guia')" class="px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow">
+        <i data-lucide="book-open-check" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Guia Explicativo</span>
+      </button>
+      <span id="theme-indicator" class="px-2.5 py-1 rounded-full bg-white/20 text-[10px] uppercase font-bold tracking-widest border border-white/20 shadow text-white">Tema Neutro</span>
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <main class="w-full max-w-3xl mx-auto px-4 py-8 flex-1 flex items-center justify-center relative z-10">
+
+    <!-- TELA 1: O TESTE MORAL -->
+    <section id="screen-1" class="w-full text-center space-y-8 page-transition">
+      <div class="w-20 h-20 mx-auto rounded-full bg-amber-400/20 flex items-center justify-center border border-amber-400/50 glow-gold backdrop-blur-md">
+        <i data-lucide="heart" class="w-10 h-10 text-amber-400 animate-pulse"></i>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight max-w-xl mx-auto drop-shadow-lg text-white">
+        "Se você pudesse salvar a vida de uma pessoa hoje... você faria isso?"
+      </h1>
+      <p class="text-sm text-white/90 max-w-md mx-auto drop-shadow font-medium">
+        Sua resposta pode mudar para sempre a história de quem espera por um doador compatível.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <button onclick="escolherRota('sim')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-extrabold text-base glow-gold hover:scale-105 transition-all">
+          [ SIM ] Quero Salvar
+        </button>
+        <button onclick="escolherRota('nao')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-black/60 border border-rose-500/70 text-rose-200 hover:bg-rose-950/80 font-bold text-base transition-all backdrop-blur-md">
+          [ NÃO ] Tenho Receio
+        </button>
+      </div>
+      
+      <div class="pt-2">
+        <button onclick="navegarPara('screen-guia')" class="text-xs text-amber-300/80 hover:text-amber-300 underline font-semibold transition-all flex items-center justify-center gap-1 mx-auto">
+          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Quero entender melhor o processo científico antes de responder
+        </button>
+      </div>
+    </section>
+
+    <!-- TELA 2A: ROTA OBSCURO -->
+    <section id="screen-2a" class="hidden w-full text-center space-y-8">
+      <div class="card-bg p-8 rounded-2xl border space-y-6 max-w-xl mx-auto shadow-2xl">
+        <div class="w-16 h-16 mx-auto rounded-full bg-rose-950/90 flex items-center justify-center border border-rose-600 text-rose-400">
+          <i data-lucide="eye-off" class="w-8 h-8"></i>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-rose-200 drop-shadow">A Rota da Escuridão</h2>
+        <p class="text-sm leading-relaxed text-rose-100 font-medium">
+          Para quem espera por uma doação de medula, a recusa é a própria escuridão. Diariamente, milhares de pessoas com leucemia, aplasia e linfomas buscam um doador compatível no mundo todo.
+        </p>
+        <div class="p-4 bg-black/60 rounded-xl border border-rose-800/80">
+          <span class="block text-xs uppercase text-rose-400 font-bold mb-1">Estatística Alarmante</span>
+          <p class="text-lg font-black text-white">A chance de encontrar um doador compatível fora da família no REDOME pode ser de <span class="text-rose-400">1 em 100 mil</span>.</p>
+        </div>
+        
+        <div class="flex flex-col gap-3">
+          <button onclick="escolherRota('sim')" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-extrabold text-sm glow-gold hover:scale-105 transition-all">
+            [ AINDA DÁ TEMPO DE SALVAR UMA VIDA ]
+          </button>
+          <button onclick="navegarPara('screen-guia')" class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all border border-white/20">
+            📖 Entender a explicação médica por trás da doação
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2B: ROTA CELESTIAL -->
+    <section id="screen-2b" class="hidden w-full text-center space-y-8">
+      <div class="card-bg p-8 rounded-2xl border space-y-6 max-w-xl mx-auto shadow-2xl">
+        <div class="w-16 h-16 mx-auto rounded-full bg-amber-400 text-slate-900 flex items-center justify-center glow-gold">
+          <i data-lucide="sparkles" class="w-8 h-8"></i>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-300 drop-shadow">Seja bem-vindo, Guardião.</h2>
+        <p class="text-base leading-relaxed text-white font-medium">
+          Sua decisão de dizer <strong class="text-amber-300">SIM</strong> pode ser o milagre que alguém está esperando hoje. O processo é rápido, seguro e indolor no cadastro.
+        </p>
+        <div class="flex flex-col gap-3">
+          <button onclick="navegarPara('screen-3')" class="w-full py-4 rounded-xl bg-white text-slate-900 font-extrabold text-sm hover:bg-amber-100 shadow-lg transition-all">
+            [ COMPREENDER O PROCESSO - INTERATIVO ]
+          </button>
+          <button onclick="navegarPara('screen-guia')" class="w-full py-3 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-bold text-xs transition-all border border-amber-400/40">
+            🔬 Acessar a Central Explicativa Científica
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 3: DESMISTIFICANDO A DOAÇÃO (SWIPE + VIBRAÇÃO) -->
+    <section id="screen-3" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Mito ou Verdade</span>
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Desmistificando a Doação</h2>
+        <p class="text-xs text-white/90">Toque nos botões ou <span class="text-amber-300 font-bold underline">arraste o cartão</span> (⬅️ Mito / ➡️ Verdade)</p>
+      </div>
+
+      <!-- Barra de Progresso -->
+      <div class="max-w-md mx-auto space-y-1">
+        <div class="flex justify-between text-[11px] text-white font-semibold">
+          <span>Progresso do Conhecimento</span>
+          <span id="card-counter" class="text-amber-300 font-bold">Cartão 1 de 4</span>
+        </div>
+        <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-white/10">
+          <div id="card-progress-bar" class="bg-amber-400 h-full w-1/4 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Container do Card Dynamic -->
+      <div class="relative max-w-md mx-auto min-h-[310px] flex items-center justify-center">
+        <div id="swipe-card" class="w-full card-bg p-6 rounded-2xl border border-amber-400/40 shadow-2xl space-y-5 text-center transition-all duration-200 select-none cursor-grab active:cursor-grabbing">
+
+          <div class="w-12 h-12 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center mx-auto text-lg font-bold">
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-[10px] uppercase font-bold text-amber-400 tracking-widest">Afirmação</span>
+            <h3 class="text-base sm:text-lg font-extrabold text-white leading-snug" id="card-question">
+              "A doação dói e tira um pedaço do osso da coluna?"
+            </h3>
+          </div>
+
+          <!-- Caixa de Resposta Explicativa -->
+          <div id="card-answer-box" class="hidden p-4 rounded-xl text-xs font-medium leading-relaxed border transition-all text-left"></div>
+
+          <!-- Botões de Escolha -->
+          <div id="card-actions" class="grid grid-cols-2 gap-3 pt-2">
+            <button onclick="responderMitoVerdade('MITO')" class="py-3.5 px-4 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white font-extrabold text-xs shadow-md transition-all border border-rose-400/40">
+              👈 ❌ MITO
+            </button>
+            <button onclick="responderMitoVerdade('VERDADE')" class="py-3.5 px-4 rounded-xl bg-emerald-600/90 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-md transition-all border border-emerald-400/40">
+              ✅ VERDADE 👉
+            </button>
+          </div>
+
+          <!-- Botão Próximo Card -->
+          <button id="btn-next-card" onclick="proximoCard()" class="hidden w-full py-3.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs glow-gold hover:bg-amber-300 transition-all">
+            Próximo Cartão &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Botão Avançar -->
+      <div class="max-w-md mx-auto pt-2 space-y-2">
+        <button id="btn-avancar-simulador" disabled onclick="navegarPara('screen-4')" class="w-full py-4 rounded-xl bg-black/40 text-white/40 font-extrabold text-sm cursor-not-allowed transition-all border border-white/10 backdrop-blur-md">
+          Responda os 4 cartões para avançar &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- TELA NOVAL: CENTRAL EXPLICATIVA E CIENTÍFICA (Ajuste Matriz) -->
+    <section id="screen-guia" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Base de Conhecimento Matriz</span>
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Guia Explicativo Completo</h2>
+        <p class="text-xs text-white/90">Entenda a ciência, os conceitos biológicos e o passo a passo definitivo da doação.</p>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Bloco 1: O que é a Medula Óssea vs Coluna -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="dna" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">1. O que é a Medula Óssea? (Medula x Coluna)</h3>
+              <span class="text-[10px] text-white/60">Esclarecimento Anatômico Fundamental</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). 
+            A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. Nela são produzidas as células-tronco hematopoéticas, responsáveis por gerar os glóbulos vermelhos, glóbulos brancos e plaquetas. <strong>Nenhum procedimento encosta na coluna vertebral!</strong>
+          </p>
+        </div>
+
+        <!-- Bloco 2: Como funciona a Compatibilidade HLA (1 em 100 mil) -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="network" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">2. Por que a compatibilidade é de 1 em 100.000?</h3>
+              <span class="text-[10px] text-white/60">Entendendo os Marcadores Genéticos HLA</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            A compatibilidade para transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Ao contrário do tipo sanguíneo (A, B, AB, O), o HLA possui milhões de combinações possíveis. Irmãos de mesmos pais possuem apenas 25% de chance de compatibilidade total. Na população em geral, a chance cai para 1 em 100 mil, por isso o REDOME necessita do maior número de voluntários cadastrados.
+          </p>
+        </div>
+
+        <!-- Bloco 3: Os 2 Métodos de Doação -->
+        <div class="card-bg p-5 rounded-2xl border space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="stethoscope" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">3. Quais são os 2 Métodos de Doação?</h3>
+              <span class="text-[10px] text-white/60">Apenas se houver compatibilidade futura</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 bg-black/40 rounded-xl border border-white/10 space-y-2">
+              <strong class="text-amber-300 font-bold block">Método 1: Aférese (~80% dos casos)</strong>
+              <p class="text-white/80 text-[11px] leading-snug">
+                O doador toma um medicamento por 5 dias para mobilizar as células da medula para a corrente sanguínea. O sangue é filtrado por uma máquina que separa as células-tronco e devolve o restante para o corpo. Sem anestesia e com alta imediata!
+              </p>
+            </div>
+            <div class="p-3.5 bg-black/40 rounded-xl border border-white/10 space-y-2">
+              <strong class="text-amber-300 font-bold block">Método 2: Punção Óssea (~20% dos casos)</strong>
+              <p class="text-white/80 text-[11px] leading-snug">
+                Realizado em centro cirúrgico sob anestesia. O médico retira uma quantidade da medula da bacia (osso do quadril, nunca coluna). O doador fica em observação por 24 horas e se recupera em poucos dias.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 4: Regeneração Rápida do Corpo -->
+        <div class="card-bg p-5 rounded-2xl border space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+              <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-amber-300">4. Regeneração Rápida e Total Segurança</h3>
+              <span class="text-[10px] text-white/60">Sem sequelas para o doador</span>
+            </div>
+          </div>
+          <p class="text-xs text-white/90 leading-relaxed">
+            A medula do doador se recompõe e regenera <strong>100% em menos de 15 dias</strong>. A doação não compromete a imunidade a longo prazo, não causa ganho de peso nem fraqueza física permanente.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button onclick="navegarPara('screen-3')" class="flex-1 py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
+          Ir para os Testes &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- TELA 4: SIMULADOR DE IMPACTO -->
+    <section id="screen-4" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Simulador de Impacto (Efeito Dominó)</h2>
+        <p class="text-xs text-white/90">Arraste a barra para ver como o aumento de doadores multiplica as chances de salvação no REDOME.</p>
+      </div>
+
+      <div class="card-bg p-6 rounded-2xl border space-y-6 text-center shadow-2xl">
+        <div>
+          <span class="text-xs text-white/70 uppercase tracking-widest font-bold">Voluntários Cadastrados</span>
+          <div class="text-4xl font-extrabold text-amber-300 mt-1" id="sim-voluntarios-val">1.000</div>
+        </div>
+
+        <input type="range" id="sim-slider" min="1" max="10000" value="1000" step="100" oninput="atualizarSimulador(this.value)" class="w-full accent-amber-400 cursor-pointer h-2 bg-white/20 rounded-lg">
+
+        <div class="grid grid-cols-2 gap-4 pt-2 text-left">
+          <div class="p-4 bg-black/40 rounded-xl border border-white/10">
+            <span class="text-[10px] text-white/70 uppercase block">Probabilidade Ampla</span>
+            <strong class="text-xl text-emerald-400 font-bold" id="sim-prob-val">1.0%</strong>
+          </div>
+          <div class="p-4 bg-black/40 rounded-xl border border-white/10">
+            <span class="text-[10px] text-white/70 uppercase block">Vidas Potenciais</span>
+            <strong class="text-xl text-amber-300 font-bold" id="sim-vidas-val">1 Vida</strong>
+          </div>
+        </div>
+
+        <!-- Box Explicativo Técnico do Simulador -->
+        <div class="p-3 bg-amber-400/10 rounded-xl border border-amber-400/20 text-left space-y-1">
+          <span class="text-[11px] text-amber-300 font-bold flex items-center gap-1">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i> Como o cálculo funciona?
+          </span>
+          <p class="text-[11px] text-white/80 leading-relaxed">
+            Como a compatibilidade HLA é estatisticamente estimada em 1 para 100.000 fora da família, cada grupo de novos voluntários eleva exponencialmente os cruzamentos genéticos do banco do REDOME.
+          </p>
+        </div>
+      </div>
+
+      <button onclick="navegarPara('screen-5')" class="w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
+        Ver a Jornada do Doador &rarr;
+      </button>
+    </section>
+
+    <!-- TELA 5: TIMELINE DA JORNADA -->
+    <section id="screen-5" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">A Jornada do Doador</h2>
+        <p class="text-xs text-white/90">O passo a passo simples desde o cadastro até a doação efetiva.</p>
+      </div>
+
+      <div class="space-y-4 relative before:absolute before:inset-0 before:left-6 before:w-0.5 before:bg-amber-400/40">
+        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">1</div>
+          <div>
+            <h3 class="font-bold text-sm text-amber-300">O Cadastro (Apenas 5 mL de Sangue)</h3>
+            <p class="text-xs text-white/90 mt-1">Você vai ao hemocentro, preenche o formulário e retira apenas um pequeno tubo de sangue (5 mL) para o teste de histocompatibilidade (HLA).</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">2</div>
+          <div>
+            <h3 class="font-bold text-sm text-amber-300">A Espera e o Registro no REDOME</h3>
+            <p class="text-xs text-white/90 mt-1">Seus dados genéticos ficam salvos no Registro Nacional. Você só é acionado se aparecer um paciente compatível no Brasil ou no mundo.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">3</div>
+          <div>
+            <h3 class="font-bold text-sm text-amber-300">O Chamado e Exames de Confirmação</h3>
+            <p class="text-xs text-white/90 mt-1">Caso ocorra o cruzamento de dados de 100% de compatibilidade, você é convidado a realizar novos exames de sangue e avaliação física para garantir total segurança.</p>
+          </div>
+        </div>
+
+        <div class="relative flex items-start gap-4 p-4 card-bg rounded-xl border shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0 z-10">4</div>
+          <div>
+            <h3 class="font-bold text-sm text-amber-300">A Doação e Regeneração Rápida</h3>
+            <p class="text-xs text-white/90 mt-1">Procedimento 100% acompanhado por médicos em centro hospitalar especializado. A medula se regenera totalmente em cerca de 15 dias.</p>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="navegarPara('screen-6')" class="w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
+        Fazer Quiz de Triagem Rápida &rarr;
+      </button>
+    </section>
+
+    <!-- TELA 6: QUIZ DE TRIAGEM COM EXPLICAÇÕES TÉCNICAS -->
+    <section id="screen-6" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Quiz de Triagem Prévia</h2>
+        <p class="text-xs text-white/90">Verifique se você atende aos requisitos básicos com as justificativas médicas de cada item.</p>
+      </div>
+
+      <form onsubmit="processarQuiz(event)" class="card-bg p-6 rounded-2xl border space-y-6 shadow-2xl">
+        <div class="p-3 bg-black/40 rounded-lg border border-white/10 flex items-start gap-3">
+          <input type="checkbox" id="lgpd-check" required class="mt-1 accent-amber-400 w-4 h-4 cursor-pointer">
+          <label for="lgpd-check" class="text-[11px] text-white/80 cursor-pointer">
+            Concordo com os termos da LGPD para uso dos meus dados exclusivamente para fins de simulação e agendamento voluntário.
+          </label>
+        </div>
+
+        <div class="space-y-5 text-xs">
+          <!-- Pergunta 1 -->
+          <div class="space-y-1">
+            <p class="font-bold text-white">1. Você possui entre 18 e 35 anos de idade?</p>
+            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Doadores nesta faixa etária apresentam maior probabilidade de "pega" das células pelo receptor e menos reações adversas.</p>
+            <div class="flex gap-4 pt-1">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="sim" required class="accent-amber-400"> Sim</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="nao" class="accent-amber-400"> Não</label>
+            </div>
+          </div>
+
+          <!-- Pergunta 2 -->
+          <div class="space-y-1">
+            <p class="font-bold text-white">2. Possui bom estado geral de saúde (sem doenças infecciosas ou autoimunes)?</p>
+            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Garante que a coleta não causará prejuízo à saúde do doador e que o receptor fragilizado não receba patógenos.</p>
+            <div class="flex gap-4 pt-1">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="sim" required class="accent-amber-400"> Sim</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="nao" class="accent-amber-400"> Não</label>
+            </div>
+          </div>
+
+          <!-- Pergunta 3 -->
+          <div class="space-y-1">
+            <p class="font-bold text-white">3. Nunca teve histórico de câncer ou neoplasia?</p>
+            <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Evita qualquer risco de transferência de células pré-neoplásicas para o paciente imunossuprimido.</p>
+            <div class="flex gap-4 pt-1">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="sim" required class="accent-amber-400"> Sim (Nunca tive)</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="nao" class="accent-amber-400"> Não (Já tive)</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
+          Verificar Elegibilidade
+        </button>
+      </form>
+
+      <div id="quiz-resultado" class="hidden p-6 rounded-2xl border text-center space-y-4 shadow-2xl"></div>
+    </section>
+
+    <!-- TELA 7: LOCALIZADOR DE HEMOCENTROS -->
+    <section id="screen-7" class="hidden w-full space-y-6">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Localizador de Hemocentros</h2>
+        <p class="text-xs text-white/90">Encontre o posto de coleta mais próximo para realizar seu cadastro.</p>
+      </div>
+
+      <div class="card-bg p-4 rounded-xl border shadow-lg">
+        <input type="text" id="filtro-cidade" placeholder="Buscar por cidade ou bairro..." onkeyup="filtrarHemocentros()" class="w-full p-3 rounded-lg bg-black/50 border border-white/20 text-xs text-white placeholder-white/60 outline-none focus:border-amber-400">
+      </div>
+
+      <div id="lista-hemocentros" class="space-y-4">
+        <div class="card-bg p-5 rounded-xl border space-y-3 item-hemocentro shadow-lg" data-cidade="diadema sao paulo">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-bold text-sm text-amber-300">Hemocentro Regional de Diadema</h3>
+              <p class="text-xs text-white/80 mt-0.5">Rua Cidade de Jundiaí, 40 - Diadema, SP</p>
+              <p class="text-[11px] text-white/60">Tel: (11) 4057-0000</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/30 border border-emerald-400/30 text-emerald-300 text-[10px] font-bold">Aberto</span>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <a href="https://maps.google.com" target="_blank" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[11px] text-center font-bold transition-all">
+              [ Abrir Rota GPS ]
+            </a>
+            <button onclick="salvarLembrete('Hemocentro Regional de Diadema')" class="flex-1 py-2 rounded-lg bg-amber-400 text-slate-950 text-[11px] font-bold transition-all">
+              [ Salvar Lembrete ]
+            </button>
+          </div>
+        </div>
+
+        <div class="card-bg p-5 rounded-xl border space-y-3 item-hemocentro shadow-lg" data-cidade="sao paulo clinicas">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-bold text-sm text-amber-300">Fundação Pró-Sangue - Posto Clínicas</h3>
+              <p class="text-xs text-white/80 mt-0.5">Av. Dr. Enéas Carvalho de Aguiar, 155 - São Paulo, SP</p>
+              <p class="text-[11px] text-white/60">Tel: (11) 4573-7800</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/30 border border-emerald-400/30 text-emerald-300 text-[10px] font-bold">Aberto</span>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <a href="https://maps.google.com" target="_blank" class="flex-1 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[11px] text-center font-bold transition-all">
+              [ Abrir Rota GPS ]
+            </a>
+            <button onclick="salvarLembrete('Posto Clínicas Pró-Sangue')" class="flex-1 py-2 rounded-lg bg-amber-400 text-slate-950 text-[11px] font-bold transition-all">
+              [ Salvar Lembrete ]
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="navegarPara('screen-8')" class="w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
+        Gerar minha Insígnia de Guardião &rarr;
+      </button>
+    </section>
+
+    <!-- TELA 8: INSÍGNIA DO GUARDIÃO -->
+    <section id="screen-8" class="hidden w-full space-y-6 text-center">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-extrabold text-white drop-shadow">Sua Insígnia do Guardião</h2>
+        <p class="text-xs text-white/90">Compartilhe e inspire seus amigos a se juntarem a esta missão.</p>
+      </div>
+
+      <div class="max-w-sm mx-auto p-6 rounded-2xl bg-gradient-to-b from-amber-300 via-amber-400 to-amber-600 text-slate-950 border-4 border-amber-200 shadow-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-900/20 pb-3">
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-800">Oficial REDOME</span>
+          <i data-lucide="shield-check" class="w-6 h-6 text-slate-900"></i>
+        </div>
+
+        <div class="py-4 space-y-1">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-800">Título Concedido</span>
+          <h3 class="text-xl font-black uppercase tracking-tight text-slate-950">Guardião da Vida</h3>
+          <p class="text-sm font-bold underline" id="insignia-nome-user">Flávio Maia Pavan</p>
+        </div>
+
+        <div class="p-3 bg-slate-950/10 rounded-xl text-[11px] font-bold text-slate-900 flex justify-between">
+          <span>Cadastrado em:</span>
+          <span id="insignia-data">--/--/----</span>
+        </div>
+
+        <div class="w-24 h-24 bg-slate-950 mx-auto rounded-lg flex items-center justify-center p-2 text-white">
+          <i data-lucide="qr-code" class="w-16 h-16 text-amber-400"></i>
+        </div>
+      </div>
+
+      <div class="max-w-sm mx-auto space-y-3">
+        <input type="text" id="input-nome-insignia" value="Flávio Maia Pavan" placeholder="Digite seu nome..." oninput="atualizarNomeInsignia(this.value)" class="w-full p-3 rounded-xl bg-black/50 border border-white/20 text-xs text-white placeholder-white/50 text-center outline-none focus:border-amber-400">
+        <button onclick="compartilharInsignia()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition-all flex items-center justify-center gap-2 shadow-lg">
+          <i data-lucide="share-2" class="w-4 h-4"></i> Compartilhar no WhatsApp / Instagram
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Global -->
+  <footer class="w-full text-center py-4 border-t border-white/20 text-[11px] text-white/70 backdrop-blur-md bg-black/40 relative z-10">
+    Projetado para conscientização e educação sobre doação de medula óssea.
+  </footer>
+
+  <script>
+    /* ========================================================
+       SISTEMA DE PARTÍCULAS EM CANVAS (Efeito Visual Imersivo)
+       ======================================================== */
+    let currentThemeMode = 'neutro'; // 'neutro', 'obscuro', 'celestial'
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height + canvas.height * 0.2;
+        this.size = Math.random() * 3 + 1;
+        this.speedY = Math.random() * 1.5 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.opacity = Math.random() * 0.7 + 0.2;
+        this.fadeSpeed = Math.random() * 0.008 + 0.003;
+      }
+
+      update() {
+        if (currentThemeMode === 'obscuro') {
+          this.y -= this.speedY * 1.8;
+          this.x += this.speedX * 1.2;
+        } else if (currentThemeMode === 'celestial') {
+          this.y -= this.speedY * 0.6;
+          this.x += Math.sin(this.y * 0.01) * 0.5;
+        } else {
+          this.y -= this.speedY * 0.4;
+          this.x += this.speedX * 0.3;
+        }
+
+        this.opacity -= this.fadeSpeed;
+
+        if (this.opacity <= 0 || this.y < -10) {
+          this.reset();
+          this.y = canvas.height + 10;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+        if (currentThemeMode === 'obscuro') {
+          const colors = [
+            `rgba(255, 69, 0, ${this.opacity})`,
+            `rgba(255, 140, 0, ${this.opacity})`,
+            `rgba(239, 68, 68, ${this.opacity})`
+          ];
+          ctx.fillStyle = colors[Math.floor(this.x) % colors.length];
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = 'rgba(239, 68, 68, 0.8)';
+        } else if (currentThemeMode === 'celestial') {
+          ctx.fillStyle = `rgba(250, 204, 21, ${this.opacity})`;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = 'rgba(250, 204, 21, 0.9)';
+        } else {
+          ctx.fillStyle = `rgba(226, 232, 240, ${this.opacity * 0.4})`;
+          ctx.shadowBlur = 4;
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
+        }
+
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initParticles() {
+      resizeCanvas();
+      particles = [];
+      const particleCount = Math.min(Math.floor(window.innerWidth / 15), 75);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    /* ========================================================
+       LÓGICA DO APLICATIVO
+       ======================================================== */
+    function vibrar(padrao = 40) {
+      if ('vibrate' in navigator) {
+        try {
+          navigator.vibrate(padrao);
+        } catch (e) {}
+      }
+    }
+
+    const cardsData = [
+      {
+        pergunta: '"A doação dói e tira um pedaço do osso da coluna?"',
+        respostaCorreta: 'MITO',
+        tituloResposta: 'MITO ABSOLUTO!',
+        explicacao: 'O cadastro inicial exige apenas uma coleta simples de 5 mL de sangue no braço. A medula óssea fica no interior de ossos como o da bacia (não na coluna) e se regenera totalmente em poucas semanas.'
+      },
+      {
+        pergunta: '"Se eu me cadastrar, terei que doar imediatamente?"',
+        respostaCorreta: 'MITO',
+        tituloResposta: 'MITO!',
+        explicacao: 'Seus dados genéticos (HLA) ficam armazenados com segurança no REDOME. Você só será convocado se surgindo futuramente um paciente 100% compatível.'
+      },
+      {
+        pergunta: '"Qualquer pessoa entre 18 e 35 anos em boa saúde pode se cadastrar?"',
+        respostaCorreta: 'VERDADE',
+        tituloResposta: 'VERDADE!',
+        explicacao: 'Basta ter entre 18 e 35 anos, estar em bom estado geral de saúde e apresentar documento oficial de identificação.'
+      },
+      {
+        pergunta: '"Tenho tatuagem ou piercing, estou proibido para sempre?"',
+        respostaCorreta: 'MITO',
+        tituloResposta: 'MITO!',
+        explicacao: 'Tatuagens ou piercings exigem apenas um período temporário de espera (geralmente de 6 a 12 meses), não impedindo o seu cadastro permanente!'
+      }
+    ];
+
+    let currentCardIndex = 0;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    function escolherRota(tipo) {
+      vibrar(60);
+      const body = document.getElementById('app-body');
+      const indicator = document.getElementById('theme-indicator');
+
+      if (tipo === 'sim') {
+        currentThemeMode = 'celestial';
+        body.className = 'theme-celestial min-h-screen flex flex-col justify-between font-sans antialiased relative overflow-x-hidden';
+        indicator.innerText = 'Tema Celestial';
+        navegarPara('screen-2b');
+      } else {
+        currentThemeMode = 'obscuro';
+        body.className = 'theme-obscuro min-h-screen flex flex-col justify-between font-sans antialiased relative overflow-x-hidden';
+        indicator.innerText = 'Tema Obscuro';
+        navegarPara('screen-2a');
+      }
+    }
+
+    function navegarPara(idTela) {
+      vibrar(35);
+      const telas = ['screen-1', 'screen-2a', 'screen-2b', 'screen-3', 'screen-guia', 'screen-4', 'screen-5', 'screen-6', 'screen-7', 'screen-8'];
+
+      telas.forEach(t => {
+        const el = document.getElementById(t);
+        if (el) {
+          el.classList.add('hidden');
+          el.classList.remove('page-transition');
+        }
+      });
+
+      const telaAtiva = document.getElementById(idTela);
+      if (telaAtiva) {
+        telaAtiva.classList.remove('hidden');
+        void telaAtiva.offsetWidth;
+        telaAtiva.classList.add('page-transition');
+      }
+
+      if (idTela === 'screen-3') {
+        carregarCardIndex(currentCardIndex);
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function carregarCardIndex(idx) {
+      const card = cardsData[idx];
+      document.getElementById('card-counter').innerText = `Cartão ${idx + 1} de ${cardsData.length}`;
+      document.getElementById('card-progress-bar').style.width = `${((idx + 1) / cardsData.length) * 100}%`;
+      document.getElementById('card-question').innerText = card.pergunta;
+
+      const cardBox = document.getElementById('swipe-card');
+      cardBox.style.transform = 'none';
+      cardBox.classList.remove('page-transition');
+      void cardBox.offsetWidth;
+      cardBox.classList.add('page-transition');
+
+      document.getElementById('card-answer-box').classList.add('hidden');
+      document.getElementById('card-actions').classList.remove('hidden');
+      document.getElementById('btn-next-card').classList.add('hidden');
+    }
+
+    function responderMitoVerdade(opcao) {
+      vibrar([40, 50, 40]);
+      const card = cardsData[currentCardIndex];
+      const ansBox = document.getElementById('card-answer-box');
+
+      document.getElementById('card-actions').classList.add('hidden');
+      ansBox.classList.remove('hidden');
+
+      if (card.respostaCorreta === 'MITO') {
+        ansBox.className = "p-4 rounded-xl text-xs font-medium leading-relaxed border bg-rose-950/80 border-rose-500/60 text-rose-100 page-transition text-left";
+      } else {
+        ansBox.className = "p-4 rounded-xl text-xs font-medium leading-relaxed border bg-emerald-950/80 border-emerald-500/60 text-emerald-100 page-transition text-left";
+      }
+
+      ansBox.innerHTML = `
+        <strong class="block text-sm font-black mb-1 text-white">${card.tituloResposta}</strong>
+        <p class="leading-relaxed">${card.explicacao}</p>
+      `;
+
+      const btnNext = document.getElementById('btn-next-card');
+      if (currentCardIndex < cardsData.length - 1) {
+        btnNext.innerText = 'Próximo Cartão →';
+      } else {
+        btnNext.innerText = 'Concluir Conscientização ✓';
+      }
+      btnNext.classList.remove('hidden');
+    }
+
+    function proximoCard() {
+      vibrar(40);
+      if (currentCardIndex < cardsData.length - 1) {
+        currentCardIndex++;
+        carregarCardIndex(currentCardIndex);
+      } else {
+        vibrar([60, 100, 60]);
+        const btnAvancar = document.getElementById('btn-avancar-simulador');
+        btnAvancar.disabled = false;
+        btnAvancar.className = "w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all cursor-pointer";
+        btnAvancar.innerText = "Avançar para o Simulador de Impacto →";
+        document.getElementById('btn-next-card').classList.add('hidden');
+      }
+    }
+
+    function configurarSwipeEvents() {
+      const card = document.getElementById('swipe-card');
+      if (!card) return;
+
+      const handleStart = (e) => {
+        isDragging = true;
+        startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        card.style.transition = 'none';
+      };
+
+      const handleMove = (e) => {
+        if (!isDragging) return;
+        currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const diffX = currentX - startX;
+        card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.05}deg)`;
+      };
+
+      const handleEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        const diffX = currentX - startX;
+        card.style.transition = 'transform 0.3s ease';
+
+        const actionsHidden = document.getElementById('card-actions').classList.contains('hidden');
+
+        if (Math.abs(diffX) > 75) {
+          if (!actionsHidden) {
+            if (diffX < 0) {
+              responderMitoVerdade('MITO');
+            } else {
+              responderMitoVerdade('VERDADE');
+            }
+          } else {
+            proximoCard();
+          }
+        }
+
+        card.style.transform = 'none';
+        startX = 0;
+        currentX = 0;
+      };
+
+      card.addEventListener('touchstart', handleStart, { passive: true });
+      card.addEventListener('touchmove', handleMove, { passive: true });
+      card.addEventListener('touchend', handleEnd);
+
+      card.addEventListener('mousedown', handleStart);
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleEnd);
+    }
+
+    function atualizarSimulador(val) {
+      document.getElementById('sim-voluntarios-val').innerText = Number(val).toLocaleString('pt-BR');
+      const prob = (val * 0.001).toFixed(1);
+      const vidas = Math.max(1, Math.floor(val / 1000));
+      document.getElementById('sim-prob-val').innerText = `${prob}%`;
+      document.getElementById('sim-vidas-val').innerText = `${vidas} ${vidas > 1 ? 'Vidas' : 'Vida'}`;
+    }
+
+    function processarQuiz(e) {
+      e.preventDefault();
+      vibrar([50, 80, 50]);
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+
+      const resDiv = document.getElementById('quiz-resultado');
+      resDiv.classList.remove('hidden');
+
+      if (q1 === 'sim' && q2 === 'sim' && q3 === 'sim') {
+        resDiv.className = "p-6 rounded-2xl border border-emerald-500 bg-emerald-950/80 text-emerald-100 text-center space-y-3 page-transition";
+        resDiv.innerHTML = `
+          <h3 class="font-extrabold text-lg text-emerald-300">Você é Elegível!</h3>
+          <p class="text-xs">Você possui o perfil ideal para ser um doador de medula óssea cadastrado.</p>
+          <button onclick="navegarPara('screen-7')" class="px-6 py-2.5 rounded-xl bg-emerald-400 text-slate-950 font-bold text-xs">Avançar para Hemocentros &rarr;</button>
+        `;
+      } else {
+        resDiv.className = "p-6 rounded-2xl border border-amber-500 bg-amber-950/80 text-amber-100 text-center space-y-3 page-transition";
+        resDiv.innerHTML = `
+          <h3 class="font-extrabold text-lg text-amber-300">Atenção aos Requisitos</h3>
+          <p class="text-xs">Você pode ter alguma restrição de idade ou saúde no momento, mas ainda pode salvar vidas divulgando a causa!</p>
+          <button onclick="navegarPara('screen-7')" class="px-6 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs">Ver Hemocentros Assim Mesmo &rarr;</button>
+        `;
+      }
+    }
+
+    function filtrarHemocentros() {
+      const term = document.getElementById('filtro-cidade').value.toLowerCase();
+      const items = document.querySelectorAll('.item-hemocentro');
+      items.forEach(item => {
+        const cidade = item.getAttribute('data-cidade');
+        if (cidade.includes(term)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    function salvarLembrete(nome) {
+      vibrar(50);
+      alert(`Lembrete para o ${nome} salvo com sucesso!`);
+    }
+
+    function atualizarNomeInsignia(val) {
+      document.getElementById('insignia-nome-user').innerText = val.trim() || 'Flávio Maia Pavan';
+    }
+
+    function compartilharInsignia() {
+      vibrar(60);
+      const texto = encodeURIComponent("Acabo de me cadastrar como Guardião da Vida no projeto de doação de medula! Venha salvar vidas você também.");
+      window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      configurarSwipeEvents();
+      initParticles();
+      animateParticles();
+
+      const hoje = new Date();
+      document.getElementById('insignia-data').innerText = hoje.toLocaleDateString('pt-BR');
+    });
+  </script>
+</body>
+</html>
