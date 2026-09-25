@@ -109,7 +109,6 @@
     </div>
     
     <div class="flex items-center gap-2">
-      <!-- Botão de Acesso Rápido à Central Explicativa Matriz -->
       <button onclick="navegarPara('screen-guia')" class="px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow">
         <i data-lucide="book-open-check" class="w-4 h-4"></i>
         <span class="hidden sm:inline">Guia Explicativo</span>
@@ -195,7 +194,7 @@
       </div>
     </section>
 
-    <!-- TELA 3: DESMISTIFICANDO A DOAÇÃO (SWIPE + VIBRAÇÃO) -->
+    <!-- TELA 3: DESMISTIFICANDO A DOAÇÃO -->
     <section id="screen-3" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Mito ou Verdade</span>
@@ -203,7 +202,6 @@
         <p class="text-xs text-white/90">Toque nos botões ou <span class="text-amber-300 font-bold underline">arraste o cartão</span> (⬅️ Mito / ➡️ Verdade)</p>
       </div>
 
-      <!-- Barra de Progresso -->
       <div class="max-w-md mx-auto space-y-1">
         <div class="flex justify-between text-[11px] text-white font-semibold">
           <span>Progresso do Conhecimento</span>
@@ -214,10 +212,8 @@
         </div>
       </div>
 
-      <!-- Container do Card Dynamic -->
       <div class="relative max-w-md mx-auto min-h-[310px] flex items-center justify-center">
         <div id="swipe-card" class="w-full card-bg p-6 rounded-2xl border border-amber-400/40 shadow-2xl space-y-5 text-center transition-all duration-200 select-none cursor-grab active:cursor-grabbing">
-
           <div class="w-12 h-12 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center mx-auto text-lg font-bold">
             <i data-lucide="help-circle" class="w-6 h-6"></i>
           </div>
@@ -229,10 +225,8 @@
             </h3>
           </div>
 
-          <!-- Caixa de Resposta Explicativa -->
           <div id="card-answer-box" class="hidden p-4 rounded-xl text-xs font-medium leading-relaxed border transition-all text-left"></div>
 
-          <!-- Botões de Escolha -->
           <div id="card-actions" class="grid grid-cols-2 gap-3 pt-2">
             <button onclick="responderMitoVerdade('MITO')" class="py-3.5 px-4 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white font-extrabold text-xs shadow-md transition-all border border-rose-400/40">
               👈 ❌ MITO
@@ -242,14 +236,12 @@
             </button>
           </div>
 
-          <!-- Botão Próximo Card -->
           <button id="btn-next-card" onclick="proximoCard()" class="hidden w-full py-3.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs glow-gold hover:bg-amber-300 transition-all">
             Próximo Cartão &rarr;
           </button>
         </div>
       </div>
 
-      <!-- Botão Avançar -->
       <div class="max-w-md mx-auto pt-2 space-y-2">
         <button id="btn-avancar-simulador" disabled onclick="navegarPara('screen-4')" class="w-full py-4 rounded-xl bg-black/40 text-white/40 font-extrabold text-sm cursor-not-allowed transition-all border border-white/10 backdrop-blur-md">
           Responda os 4 cartões para avançar &rarr;
@@ -257,7 +249,7 @@
       </div>
     </section>
 
-    <!-- TELA NOVAL: CENTRAL EXPLICATIVA E CIENTÍFICA (Ajuste Matriz) -->
+    <!-- TELA GUIA: CENTRAL EXPLICATIVA E CIENTÍFICA -->
     <section id="screen-guia" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Base de Conhecimento Matriz</span>
@@ -266,8 +258,6 @@
       </div>
 
       <div class="space-y-4">
-
-        <!-- Bloco 1: O que é a Medula Óssea vs Coluna -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -284,7 +274,6 @@
           </p>
         </div>
 
-        <!-- Bloco 2: Como funciona a Compatibilidade HLA (1 em 100 mil) -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -300,7 +289,6 @@
           </p>
         </div>
 
-        <!-- Bloco 3: Os 2 Métodos de Doação -->
         <div class="card-bg p-5 rounded-2xl border space-y-4">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -328,7 +316,6 @@
           </div>
         </div>
 
-        <!-- Bloco 4: Regeneração Rápida do Corpo -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
             <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -343,7 +330,6 @@
             A medula do doador se recompõe e regenera <strong>100% em menos de 15 dias</strong>. A doação não compromete a imunidade a longo prazo, não causa ganho de peso nem fraqueza física permanente.
           </p>
         </div>
-
       </div>
 
       <div class="flex gap-3 pt-2">
@@ -379,7 +365,6 @@
           </div>
         </div>
 
-        <!-- Box Explicativo Técnico do Simulador -->
         <div class="p-3 bg-amber-400/10 rounded-xl border border-amber-400/20 text-left space-y-1">
           <span class="text-[11px] text-amber-300 font-bold flex items-center gap-1">
             <i data-lucide="info" class="w-3.5 h-3.5"></i> Como o cálculo funciona?
@@ -441,7 +426,7 @@
       </button>
     </section>
 
-    <!-- TELA 6: QUIZ DE TRIAGEM COM EXPLICAÇÕES TÉCNICAS -->
+    <!-- TELA 6: QUIZ DE TRIAGEM -->
     <section id="screen-6" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <h2 class="text-2xl font-extrabold text-white drop-shadow">Quiz de Triagem Prévia</h2>
@@ -457,7 +442,6 @@
         </div>
 
         <div class="space-y-5 text-xs">
-          <!-- Pergunta 1 -->
           <div class="space-y-1">
             <p class="font-bold text-white">1. Você possui entre 18 e 35 anos de idade?</p>
             <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Doadores nesta faixa etária apresentam maior probabilidade de "pega" das células pelo receptor e menos reações adversas.</p>
@@ -467,7 +451,6 @@
             </div>
           </div>
 
-          <!-- Pergunta 2 -->
           <div class="space-y-1">
             <p class="font-bold text-white">2. Possui bom estado geral de saúde (sem doenças infecciosas ou autoimunes)?</p>
             <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Garante que a coleta não causará prejuízo à saúde do doador e que o receptor fragilizado não receba patógenos.</p>
@@ -477,13 +460,12 @@
             </div>
           </div>
 
-          <!-- Pergunta 3 -->
           <div class="space-y-1">
             <p class="font-bold text-white">3. Nunca teve histórico de câncer ou neoplasia?</p>
             <p class="text-[10px] text-amber-300/80 italic">💡 Razão médica: Evita qualquer risco de transferência de células pré-neoplásicas para o paciente imunossuprimido.</p>
             <div class="flex gap-4 pt-1">
-              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="sim" required class="accent-amber-400"> Sim (Já tive)</label>
-              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="nao" class="accent-amber-400"> Não (Nunca tive)</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="sim" required class="accent-amber-400"> Sim (Nunca tive)</label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="nao" class="accent-amber-400"> Não (Já tive)</label>
             </div>
           </div>
         </div>
@@ -496,11 +478,30 @@
       <div id="quiz-resultado" class="hidden p-6 rounded-2xl border text-center space-y-4 shadow-2xl"></div>
     </section>
 
-    <!-- TELA 7: LOCALIZADOR DE HEMOCENTROS -->
+    <!-- TELA 7: LOCALIZADOR DE HEMOCENTROS E REDOME -->
     <section id="screen-7" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
+        <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/40 backdrop-blur-md inline-block">
+          Triagem Concluída
+        </span>
         <h2 class="text-2xl font-extrabold text-white drop-shadow">Localizador de Hemocentros</h2>
-        <p class="text-xs text-white/90">Encontre o posto de coleta mais próximo para realizar seu cadastro.</p>
+        <p class="text-xs text-white/90">Encontre o posto de coleta mais próximo e acesse o portal oficial.</p>
+      </div>
+
+      <!-- Bloco REDOME / INCA -->
+      <div class="card-bg p-6 rounded-2xl border border-amber-400/30 text-center space-y-4 shadow-2xl">
+        <div class="flex items-center justify-center gap-2 text-amber-300 font-extrabold text-sm sm:text-base">
+          <i data-lucide="globe" class="w-5 h-5 text-amber-400"></i>
+          <span>Registro Nacional de Doadores (REDOME / INCA)</span>
+        </div>
+        <p class="text-xs text-white/80 leading-relaxed max-w-lg mx-auto">
+          Acesse o portal oficial do REDOME para realizar seu pré-cadastro digital e tirar dúvidas com o Ministério da Saúde.
+        </p>
+        <a href="https://redome.inca.gov.br/" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-lg glow-gold">
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+          <span>ACESSAR PORTAL OFICIAL REDOME (INCA)</span>
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
       </div>
 
       <div class="card-bg p-4 rounded-xl border shadow-lg">
@@ -597,10 +598,7 @@
   </footer>
 
   <script>
-    /* ========================================================
-       SISTEMA DE PARTÍCULAS EM CANVAS (Efeito Visual Imersivo)
-       ======================================================== */
-    let currentThemeMode = 'neutro'; // 'neutro', 'obscuro', 'celestial'
+    let currentThemeMode = 'neutro';
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -693,9 +691,6 @@
 
     window.addEventListener('resize', resizeCanvas);
 
-    /* ========================================================
-       LÓGICA DO APLICATIVO
-       ======================================================== */
     function vibrar(padrao = 40) {
       if ('vibrate' in navigator) {
         try {
@@ -939,88 +934,19 @@
       });
     }
 
-   function salvarLembrete(nome) {
+    function salvarLembrete(nome) {
       vibrar(50);
       alert(`Lembrete para o ${nome} salvo com sucesso!`);
     }
 
-    /* ========================================================
-       FUNÇÕES DE INSÍGNIA E COMPARTILHAMENTO AVANÇADO
-       ======================================================== */
     function atualizarNomeInsignia(val) {
-      const nome = val.trim() || 'Flávio Maia Pavan';
-      document.getElementById('insignia-nome-user').innerText = nome;
+      document.getElementById('insignia-nome-user').innerText = val.trim() || 'Flávio Maia Pavan';
     }
 
-    function gerarIdCodeUnico() {
-      const rand = Math.floor(1000 + Math.random() * 9000);
-      document.getElementById('insignia-id-code').innerText = `#REDOME-2026-${rand}`;
-    }
-
-    function compartilharWhatsApp() {
+    function compartilharInsignia() {
       vibrar(60);
-      const nome = document.getElementById('insignia-nome-user').innerText;
-      const texto = encodeURIComponent(
-        `🛡️ Sou oficialmente um Guardião da Vida!\n\n` +
-        `Eu, ${nome}, acabo de me certificar no Projeto Guardiões de Medula.\n` +
-        `A doação de medula óssea é um ato simples, indolor e salva vidas!\n\n` +
-        `Acesse o site oficial do REDOME e saiba como se cadastrar:\n` +
-        `https://redome.inca.gov.br/doadores/`
-      );
+      const texto = encodeURIComponent("Acabo de me cadastrar como Guardião da Vida no projeto de doação de medula! Venha salvar vidas você também.");
       window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
-    }
-
-    async function compartilharInstagram() {
-      vibrar(60);
-      const cardElement = document.getElementById('insignia-card-container');
-
-      try {
-        // Gera a imagem PNG em alta definição do Card
-        const canvasImage = await html2canvas(cardElement, {
-          scale: 2,
-          backgroundColor: null,
-          useCORS: true
-        });
-
-        canvasImage.toBlob(async (blob) => {
-          const file = new File([blob], 'insignia_guardiao_medula.png', { type: 'image/png' });
-
-          // Se o dispositivo suportar compartilhamento de arquivo via Web Share API (Mobile iOS/Android)
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-              await navigator.share({
-                files: [file],
-                title: 'Insígnia Guardião da Vida',
-                text: 'Sou um Guardião da Vida! Saiba como doar medula óssea no REDOME: https://redome.inca.gov.br/doadores/'
-              });
-            } catch (err) {
-              console.log('Compartilhamento cancelado.');
-            }
-          } else {
-            // Fallback para Desktop: Baixa a imagem HD e orienta o usuário
-            baixarInsigniaPNG();
-            alert('📸 Imagem da Insígnia gerada em HD e salva nos seus Downloads!\n\nAgora basta abrir o Instagram e postar no seu Stories ou Feed!');
-          }
-        }, 'image/png');
-
-      } catch (e) {
-        alert('Ocorreu um erro ao gerar a imagem. Tente usar o botão de Download.');
-      }
-    }
-
-    async function baixarInsigniaPNG() {
-      vibrar(50);
-      const cardElement = document.getElementById('insignia-card-container');
-      const canvasImage = await html2canvas(cardElement, {
-        scale: 3, // Qualidade HD
-        backgroundColor: null,
-        useCORS: true
-      });
-
-      const link = document.createElement('a');
-      link.download = 'insignia_guardiao_medula.png';
-      link.href = canvasImage.toDataURL('image/png');
-      link.click();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1028,7 +954,6 @@
       configurarSwipeEvents();
       initParticles();
       animateParticles();
-      gerarIdCodeUnico();
 
       const hoje = new Date();
       document.getElementById('insignia-data').innerText = hoje.toLocaleDateString('pt-BR');
