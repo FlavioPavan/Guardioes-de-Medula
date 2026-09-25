@@ -939,19 +939,88 @@
       });
     }
 
-    function salvarLembrete(nome) {
+   function salvarLembrete(nome) {
       vibrar(50);
       alert(`Lembrete para o ${nome} salvo com sucesso!`);
     }
 
+    /* ========================================================
+       FUNÇÕES DE INSÍGNIA E COMPARTILHAMENTO AVANÇADO
+       ======================================================== */
     function atualizarNomeInsignia(val) {
-      document.getElementById('insignia-nome-user').innerText = val.trim() || 'Flávio Maia Pavan';
+      const nome = val.trim() || 'Flávio Maia Pavan';
+      document.getElementById('insignia-nome-user').innerText = nome;
     }
 
-    function compartilharInsignia() {
+    function gerarIdCodeUnico() {
+      const rand = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('insignia-id-code').innerText = `#REDOME-2026-${rand}`;
+    }
+
+    function compartilharWhatsApp() {
       vibrar(60);
-      const texto = encodeURIComponent("Acabo de me cadastrar como Guardião da Vida no projeto de doação de medula! Venha salvar vidas você também.");
+      const nome = document.getElementById('insignia-nome-user').innerText;
+      const texto = encodeURIComponent(
+        `🛡️ Sou oficialmente um Guardião da Vida!\n\n` +
+        `Eu, ${nome}, acabo de me certificar no Projeto Guardiões de Medula.\n` +
+        `A doação de medula óssea é um ato simples, indolor e salva vidas!\n\n` +
+        `Acesse o site oficial do REDOME e saiba como se cadastrar:\n` +
+        `https://redome.inca.gov.br/doadores/`
+      );
       window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+    }
+
+    async function compartilharInstagram() {
+      vibrar(60);
+      const cardElement = document.getElementById('insignia-card-container');
+
+      try {
+        // Gera a imagem PNG em alta definição do Card
+        const canvasImage = await html2canvas(cardElement, {
+          scale: 2,
+          backgroundColor: null,
+          useCORS: true
+        });
+
+        canvasImage.toBlob(async (blob) => {
+          const file = new File([blob], 'insignia_guardiao_medula.png', { type: 'image/png' });
+
+          // Se o dispositivo suportar compartilhamento de arquivo via Web Share API (Mobile iOS/Android)
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                files: [file],
+                title: 'Insígnia Guardião da Vida',
+                text: 'Sou um Guardião da Vida! Saiba como doar medula óssea no REDOME: https://redome.inca.gov.br/doadores/'
+              });
+            } catch (err) {
+              console.log('Compartilhamento cancelado.');
+            }
+          } else {
+            // Fallback para Desktop: Baixa a imagem HD e orienta o usuário
+            baixarInsigniaPNG();
+            alert('📸 Imagem da Insígnia gerada em HD e salva nos seus Downloads!\n\nAgora basta abrir o Instagram e postar no seu Stories ou Feed!');
+          }
+        }, 'image/png');
+
+      } catch (e) {
+        alert('Ocorreu um erro ao gerar a imagem. Tente usar o botão de Download.');
+      }
+    }
+
+    async function baixarInsigniaPNG() {
+      vibrar(50);
+      const cardElement = document.getElementById('insignia-card-container');
+      const canvasImage = await html2canvas(cardElement, {
+        scale: 3, // Qualidade HD
+        backgroundColor: null,
+        useCORS: true
+      });
+
+      const link = document.createElement('a');
+      link.download = 'insignia_guardiao_medula.png';
+      link.href = canvasImage.toDataURL('image/png');
+      link.click();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -959,6 +1028,7 @@
       configurarSwipeEvents();
       initParticles();
       animateParticles();
+      gerarIdCodeUnico();
 
       const hoje = new Date();
       document.getElementById('insignia-data').innerText = hoje.toLocaleDateString('pt-BR');
