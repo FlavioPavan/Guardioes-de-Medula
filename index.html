@@ -140,7 +140,7 @@
       <!-- Botão Guia Explicativo -->
       <button onclick="navegarPara('screen-guia')" class="px-3 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow">
         <i data-lucide="book-open-check" class="w-3.5 h-3.5"></i>
-        <span class="hidden sm:inline">Guia Científico</span>
+        <span class="hidden sm:inline">Guia</span>
       </button>
 
       <span id="theme-indicator" class="px-2.5 py-1 rounded-full bg-white/20 text-[10px] uppercase font-bold tracking-widest border border-white/20 shadow text-white">Tema Neutro</span>
@@ -204,7 +204,6 @@
             [ AINDA DÁ TEMPO DE SALVAR UMA VIDA ]
           </button>
 
-          <!-- BOTÃO RESTAURADO: Acessar a Central Explicativa Científica -->
           <button onclick="navegarPara('screen-guia')" class="w-full py-3.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/50 text-amber-300 font-extrabold text-xs flex items-center justify-center gap-2 transition-all">
             <i data-lucide="microscope" class="w-4 h-4"></i>
             <span>Acessar a Central Explicativa científica</span>
@@ -232,7 +231,6 @@
             [ COMPREENDER O PROCESSO - INTERATIVO ]
           </button>
 
-          <!-- BOTÃO RESTAURADO: Acessar a Central Explicativa Científica -->
           <button onclick="navegarPara('screen-guia')" class="w-full py-3.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/50 text-amber-300 font-extrabold text-xs flex items-center justify-center gap-2 transition-all">
             <i data-lucide="microscope" class="w-4 h-4"></i>
             <span>Acessar a Central Explicativa científica</span>
@@ -300,131 +298,104 @@
       </div>
     </section>
 
-    <!-- TELA GUIA: CENTRAL EXPLICATIVA COMPLETA (RESTAURADA NA ÍNTEGRA) -->
+    <!-- TELA GUIA: CENTRAL EXPLICATIVA COMPLETA (EXATAMENTE COMO NA IMAGEM DE REFERÊNCIA) -->
     <section id="screen-guia" class="hidden w-full space-y-6">
       <div class="text-center space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/30 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/40 backdrop-blur-md">Base de Conhecimento Matriz</span>
-        <h2 class="text-2xl font-extrabold text-white drop-shadow">Guia Explicativo Completo & Científico</h2>
-        <p class="text-xs text-white/90 max-w-lg mx-auto">Entenda a ciência por trás da doação, os conceitos biológicos e o procedimento real detalhado.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white drop-shadow">Guia Explicativo Completo</h2>
+        <p class="text-xs text-white/90 max-w-lg mx-auto">Entenda a ciência, os conceitos biológicos e o passo a passo definitivo da doação.</p>
       </div>
 
-      <!-- PAINEL CIENTÍFICO COMPLETO INTEGRAL -->
       <div class="space-y-4">
-        <!-- 1. MEDULA ÓSSEA X COLUNA VERTEBRAL -->
+        <!-- 1. O que é a Medula Óssea? (Medula x Coluna) -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
               <i data-lucide="dna" class="w-6 h-6"></i>
             </div>
             <div>
               <h3 class="font-extrabold text-sm text-amber-300">1. O que é a Medula Óssea? (Medula x Coluna)</h3>
-              <span class="text-[10px] text-white/60">Esclarecimento Anatômico Fundamental</span>
+              <span class="text-[10px] text-white/60 block">Esclarecimento Anatômico Fundamental</span>
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal</i> (coluna vertebral). A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a <strong>"fábrica do sangue"</strong>. Nela são produzidas as células-tronco hematopoéticas (hemácias, leucócitos e plaquetas). <strong>Nenhum procedimento de doação encosta na coluna vertebral ou no sistema nervoso!</strong>
+            Muitas pessoas confundem a <strong>Medula Óssea</strong> com a <i>Medula Espinhal (coluna vertebral)</i>. A medula óssea é um tecido líquido e gelatinoso localizado no interior dos ossos (como o quadril e esterno), conhecido como a "fábrica do sangue". Nela são produzidas as células-tronco hematopoéticas, responsáveis por gerar os glóbulos vermelhos, glóbulos brancos e plaquetas. <strong>Nenhum procedimento encosta na coluna vertebral!</strong>
           </p>
         </div>
 
-        <!-- 2. COMPATIBILIDADE HLA -->
+        <!-- 2. Por que a compatibilidade é de 1 em 100.000? -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
               <i data-lucide="network" class="w-6 h-6"></i>
             </div>
             <div>
               <h3 class="font-extrabold text-sm text-amber-300">2. Por que a compatibilidade é de 1 em 100.000?</h3>
-              <span class="text-[10px] text-white/60">Marcadores Genéticos HLA</span>
+              <span class="text-[10px] text-white/60 block">Entendendo os Marcadores Genéticos HLA</span>
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            A compatibilidade para o transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Como o HLA possui milhões de combinações possíveis na espécie humana, encontrar um doador compatível fora da família direta é como achar um "gêmeo genético". Por isso, quanto mais voluntários cadastrados no REDOME, maior a chance de salvar pacientes com leucemias severas.
+            A compatibilidade para transplante de medula depende dos marcadores genéticos do sistema <strong>HLA (Antígenos Leucocitários Humanos)</strong>. Ao contrário do tipo sanguíneo (A, B, AB, O), o HLA possui milhões de combinações possíveis. Irmãos de mesmos pais possuem apenas 25% de chance de compatibilidade total. Na população em geral, a chance cai para 1 em 100 mil, por isso o REDOME necessita do maior número de voluntários cadastrados.
           </p>
         </div>
 
-        <!-- 3. COMO É FEITO O CADASTRO -->
+        <!-- 3. Quais são os 2 Métodos de Doação? -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
-              <i data-lucide="syringe" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="font-extrabold text-sm text-amber-300">3. Como funciona o Cadastro Inicial?</h3>
-              <span class="text-[10px] text-white/60">Apenas 5 mL de Sangue</span>
-            </div>
-          </div>
-          <p class="text-xs text-white/90 leading-relaxed">
-            Para se cadastrar, você não doa medula imediatamente. Você apenas comparece a um hemocentro, preenche uma ficha com dados de contato e colhe apenas <strong>5 mL de sangue</strong> (um pequeno tubinho). Esse sangue vai para laboratório para realizar o exame de histocompatibilidade (HLA) e seus dados ficam salvos de forma confidencial no registro nacional.
-          </p>
-        </div>
-
-        <!-- 4. MÉTODOS DE DOAÇÃO -->
-        <div class="card-bg p-5 rounded-2xl border space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
               <i data-lucide="activity" class="w-6 h-6"></i>
             </div>
             <div>
-              <h3 class="font-extrabold text-sm text-amber-300">4. Como é feita a doação se houver compatibilidade?</h3>
-              <span class="text-[10px] text-white/60">Procedimento Seguro e Escolhido pelos Médicos</span>
+              <h3 class="font-extrabold text-sm text-amber-300">3. Quais são os 2 Métodos de Doação?</h3>
+              <span class="text-[10px] text-white/60 block">Apenas se houver compatibilidade futura</span>
             </div>
           </div>
-          <p class="text-xs text-white/90 leading-relaxed">
-            Existem duas formas seguras de doação, definidas pelos médicos conforme a necessidade do paciente:
-          </p>
-          <ul class="text-xs text-white/80 space-y-1.5 list-disc pl-4">
-            <li><strong>Aférese (Mais comum):</strong> O doador toma um medicamento por 5 dias que estimula as células-tronco a irem para a corrente sanguínea. A coleta é feita diretamente pelas veias do braço em uma máquina própria, sem anestesia e sem cirurgia.</li>
-            <li><strong>Punção Ilíaca:</strong> Realizada em centro cirúrgico sob anestesia (geral ou peridural). Retira-se a medula do osso da bacia (quadril) com agulhas apropriadas. O doador não sente nada durante o processo e retorna para casa no dia seguinte.</li>
-          </ul>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1.5">
+              <h4 class="font-bold text-xs text-amber-300">Método 1: Aférese (~80% dos casos)</h4>
+              <p class="text-[11px] text-white/80 leading-relaxed">
+                O doador toma um medicamento por 5 dias para mobilizar as células da medula para a corrente sanguínea. O sangue é filtrado por uma máquina que separa as células-tronco e devolve o restante para o corpo. Sem anestesia e com alta imediata!
+              </p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1.5">
+              <h4 class="font-bold text-xs text-amber-300">Método 2: Punção Óssea (~20% dos casos)</h4>
+              <p class="text-[11px] text-white/80 leading-relaxed">
+                Realizado em centro cirúrgico sob anestesia. O médico retira uma quantidade da medula da bacia (osso do quadril, nunca coluna). O doador fica em observação por 24 horas e se recupera em poucos dias.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- 5. REGENERAÇÃO RÁPIDA -->
+        <!-- 4. Regeneração Rápida e Total Segurança -->
         <div class="card-bg p-5 rounded-2xl border space-y-3">
           <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
               <i data-lucide="refresh-cw" class="w-6 h-6"></i>
             </div>
             <div>
-              <h3 class="font-extrabold text-sm text-amber-300">5. Regeneração Celular e Recuperação</h3>
-              <span class="text-[10px] text-white/60">Recomposição Total pelo Organismo</span>
+              <h3 class="font-extrabold text-sm text-amber-300">4. Regeneração Rápida e Total Segurança</h3>
+              <span class="text-[10px] text-white/60 block">Sem sequelas para o doador</span>
             </div>
           </div>
           <p class="text-xs text-white/90 leading-relaxed">
-            A medula óssea do doador se recompoe integralmente em apenas <strong>15 dias (poucas semanas)</strong>. O procedimento não causa nenhum prejuízo à saúde do doador a longo prazo e salva diretamente a vida do receptor.
+            A medula do doador se recompõe e regenera 100% em menos de 15 dias. A doação não compromete a imunidade a longo prazo, não causa ganho de peso nem fraqueza física permanente.
           </p>
-        </div>
-
-        <!-- 6. QUEM PODE DOAR -->
-        <div class="card-bg p-5 rounded-2xl border space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
-              <i data-lucide="user-check" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="font-extrabold text-sm text-amber-300">6. Requisitos Principais para Doar</h3>
-              <span class="text-[10px] text-white/60">Regras Oficiais do Ministério da Saúde</span>
-            </div>
-          </div>
-          <ul class="text-xs text-white/90 space-y-1 list-disc pl-4">
-            <li>Ter entre <strong>18 e 35 anos de idade</strong> no momento do cadastro.</li>
-            <li>Estar em bom estado geral de saúde (sem doenças infecciosas graves ou ativas).</li>
-            <li>Apresentar documento de identificação oficial com foto.</li>
-            <li>Tatuagem ou piercing exigem apenas um período temporário de carência (6 a 12 meses).</li>
-          </ul>
         </div>
 
         <!-- BOX PORTAL GOVERNO REDOME -->
         <div class="p-4 bg-emerald-950/80 rounded-2xl border border-emerald-500/50 text-center space-y-2">
-          <span class="text-xs font-extrabold text-emerald-300 block">Consulte as Orientações Oficiais do Governo</span>
+          <span class="text-xs font-extrabold text-emerald-300 block">Quer saber mais no site oficial do governo?</span>
           <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="block w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs transition-all shadow-lg">
-            🌐 Acessar Portal Oficial REDOME / INCA (redome.inca.gov.br)
+            🌐 Acessar Portal Oficial REDOME / INCA
           </a>
         </div>
       </div>
 
-      <div class="flex gap-3 pt-2">
-        <button onclick="navegarPara('screen-3')" class="flex-1 py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all">
-          Iniciar Teste de Conhecimento &rarr;
+      <!-- BOTÃO DE AVANÇAR PARA OS TESTES -->
+      <div class="pt-2">
+        <button onclick="navegarPara('screen-3')" class="w-full py-4 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-sm glow-gold hover:bg-amber-300 transition-all text-center">
+          Ir para os Testes &rarr;
         </button>
       </div>
     </section>
@@ -565,7 +536,7 @@
       </button>
     </section>
 
-    <!-- TELA 8: INSÍGNIA DO GUARDIÃO (REDESENHADA E ALTO IMPACTO VISUAL) -->
+    <!-- TELA 8: INSÍGNIA DO GUARDIÃO -->
     <section id="screen-8" class="hidden w-full space-y-6 text-center">
       <div class="space-y-2">
         <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-bold uppercase tracking-widest border border-amber-400/30 backdrop-blur-md">Certificado Digital Oficial</span>
@@ -573,9 +544,8 @@
         <p class="text-xs text-white/90">Personalize seu nome, baixe a imagem e compartilhe para inspirar a causa.</p>
       </div>
 
-      <!-- CARD DA INSÍGNIA PARA RENDERIZAÇÃO E COMPARTILHAMENTO -->
+      <!-- CARD DA INSÍGNIA -->
       <div id="insignia-card-container" class="max-w-md mx-auto p-7 rounded-3xl insignia-card text-white space-y-6 relative border-2 border-amber-400/60 shadow-2xl">
-        <!-- Topo da Credencial -->
         <div class="flex justify-between items-center border-b border-amber-400/30 pb-4">
           <div class="flex items-center gap-2">
             <i data-lucide="shield-check" class="w-7 h-7 text-amber-400"></i>
@@ -589,7 +559,6 @@
           </span>
         </div>
 
-        <!-- Conteúdo do Guardião -->
         <div class="py-2 space-y-3">
           <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-500 via-amber-300 to-amber-100 p-1 shadow-lg">
             <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center">
@@ -606,7 +575,6 @@
           </div>
         </div>
 
-        <!-- Rodapé do Card com ID e Data -->
         <div class="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 text-left">
           <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
             <span class="text-[9px] text-white/50 uppercase font-bold block">Código de Ativação</span>
@@ -618,43 +586,36 @@
           </div>
         </div>
 
-        <!-- Marca d'água -->
         <div class="pt-1 flex items-center justify-center gap-1.5 text-[10px] text-white/60 font-medium">
           <i data-lucide="heart-handshake" class="w-3.5 h-3.5 text-rose-400"></i>
           <span>"Salvar uma vida é salvar o mundo inteiro."</span>
         </div>
       </div>
 
-      <!-- CONTROLES E BOTÕES DE COMPARTILHAMENTO -->
+      <!-- CONTROLES -->
       <div class="max-w-md mx-auto space-y-4">
-        <!-- Input de Nome -->
         <div class="space-y-1 text-left">
           <label class="text-[11px] font-bold text-amber-300/90 ml-1">Digite seu nome na insígnia:</label>
           <input type="text" id="input-nome-insignia" value="Flávio Maia Pavan" placeholder="Seu Nome Completo..." oninput="atualizarNomeInsignia(this.value)" class="w-full p-3.5 rounded-xl bg-black/60 border border-amber-400/40 text-xs text-white placeholder-white/40 outline-none focus:border-amber-400 transition-all font-semibold shadow-inner">
         </div>
 
-        <!-- Grid de Botões de Ação -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- WhatsApp -->
           <button onclick="compartilharWhatsApp()" class="py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
             <i data-lucide="message-circle" class="w-4 h-4"></i>
             <span>Enviar no WhatsApp</span>
           </button>
 
-          <!-- Instagram / Web Share -->
           <button onclick="compartilharInstagram()" class="py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-90 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
             <i data-lucide="instagram" class="w-4 h-4"></i>
             <span>Postar no Instagram</span>
           </button>
         </div>
 
-        <!-- Download Imagem HD -->
         <button onclick="baixarInsigniaPNG()" class="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 font-extrabold text-xs transition-all border border-amber-400/40 flex items-center justify-center gap-2 active:scale-95">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span>Baixar Imagem da Insígnia (PNG HD)</span>
         </button>
 
-        <!-- Botão Oficial do Governo -->
         <a href="https://redome.inca.gov.br/doadores/" target="_blank" class="w-full py-3.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/50 text-emerald-300 font-extrabold text-xs transition-all flex items-center justify-center gap-2">
           <i data-lucide="external-link" class="w-4 h-4"></i>
           <span>Acessar Portal Oficial do Governo REDOME</span>
@@ -818,7 +779,6 @@
         carregarCardIndex(currentCardIndex);
       }
 
-      // Re-inicializa ícones da Lucide para garantir exibição
       if (window.lucide) {
         lucide.createIcons();
       }
@@ -991,7 +951,7 @@
     }
 
     /* ========================================================
-       FUNÇÕES DE INSÍGNIA E COMPARTILHAMENTO AVANÇADO
+       FUNÇÕES DE INSÍGNIA E COMPARTILHAMENTO
        ======================================================== */
     function atualizarNomeInsignia(val) {
       const nome = val.trim() || 'Flávio Maia Pavan';
