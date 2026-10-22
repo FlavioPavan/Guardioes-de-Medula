@@ -109,7 +109,7 @@
   <!-- Canvas de Partículas Flutuantes -->
   <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-  <!-- Header Global (SEM BOTÃO DE REINICIAR) -->
+  <!-- Header Global -->
   <header class="w-full max-w-4xl mx-auto px-4 py-4 flex items-center justify-between border-b border-white/20 backdrop-blur-md bg-black/40 rounded-b-xl relative z-10">
     <div class="flex items-center gap-2 cursor-pointer" onclick="navegarPara('screen-1')">
       <i data-lucide="shield-heart" class="w-7 h-7 text-amber-400"></i>
@@ -618,7 +618,7 @@
         </div>
       </div>
 
-      <!-- PAINEL DE EDIÇÃO E COMPARTILHAMENTO COMPLETO -->
+      <!-- PAINEL DE EDIÇÃO E COMPARTILHAMENTO ATUALIZADO -->
       <div class="max-w-md mx-auto space-y-4 pt-2">
         <div class="space-y-1 text-left">
           <label for="input-nome-insignia" class="text-xs font-bold text-amber-300 flex items-center gap-1">
@@ -634,23 +634,25 @@
             <span>Compartilhar no WhatsApp</span>
           </button>
 
-          <!-- Botão Instagram (Fluxo Otimizado) -->
-          <button onclick="compartilharInstagram()" class="w-full py-4 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:opacity-95 text-white font-extrabold text-sm transition-all flex items-center justify-center gap-2.5 shadow-lg hover:scale-[1.02]">
-            <i data-lucide="instagram" class="w-5 h-5"></i>
-            <span>Compartilhar no Instagram</span>
+          <!-- Botão de Compartilhar Geral (Redes Sociais, Instagram, E-mail, etc.) -->
+          <button onclick="compartilharNativo()" class="w-full py-4 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm transition-all flex items-center justify-center gap-2.5 shadow-lg hover:scale-[1.02]">
+            <i data-lucide="share-2" class="w-5 h-5"></i>
+            <span>Compartilhar (Outros Aplicativos)</span>
           </button>
 
-          <div class="grid grid-cols-2 gap-2.5 pt-1">
-            <button onclick="compartilharNativo()" class="py-3 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-              <i data-lucide="share-2" class="w-4 h-4"></i>
-              <span>Compartilhar (Geral)</span>
-            </button>
+          <!-- Botão Copiar Link -->
+          <button onclick="copiarLinkApp()" class="w-full py-3 px-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
+            <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
+            <span>Copiar Link do App</span>
+          </button>
+        </div>
 
-            <button onclick="copiarLinkApp()" class="py-3 px-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-              <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
-              <span>Copiar Link do App</span>
-            </button>
-          </div>
+        <!-- BOTÃO PARA VOLTAR AO INÍCIO -->
+        <div class="pt-4 border-t border-white/10">
+          <button onclick="reiniciarJornada()" class="w-full py-3.5 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-200 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Voltar ao Início / Reiniciar Jornada</span>
+          </button>
         </div>
       </div>
     </section>
@@ -822,6 +824,30 @@
         toast.classList.remove('opacity-100');
         toast.classList.add('opacity-0', 'pointer-events-none');
       }, 3200);
+    }
+
+    function reiniciarJornada() {
+      if (confirm("Deseja realmente reiniciar sua jornada do início?")) {
+        appState.currentTela = 'screen-1';
+        appState.themeMode = 'neutro';
+        appState.cardIndex = 0;
+        appState.cardCompleted = false;
+        salvarEstado();
+
+        aplicarTema('neutro');
+        currentCardIndex = 0;
+        carregarCardIndex(0);
+
+        const btnAvancar = document.getElementById('btn-avancar-simulador');
+        if (btnAvancar) {
+          btnAvancar.disabled = true;
+          btnAvancar.className = "w-full py-4 rounded-xl bg-black/40 text-white/40 font-extrabold text-sm cursor-not-allowed transition-all border border-white/10 backdrop-blur-md";
+          btnAvancar.innerText = "Responda os 4 cartões para avançar →";
+        }
+
+        navegarPara('screen-1');
+        mostrarToast("Jornada reiniciada do início!");
+      }
     }
 
     // ============================================================
@@ -1329,7 +1355,7 @@
     }
 
     // ============================================================
-    // TELA 8 - INSÍGNIA & COMPARTILHAMENTO CORRIGIDO (INSTAGRAM)
+    // TELA 8 - INSÍGNIA & COMPARTILHAMENTO
     // ============================================================
     function hashString(str) {
       let hash = 0;
@@ -1367,8 +1393,7 @@
       return {
         nome,
         urlApp,
-        textoWhatsApp: `🩸 *EU SOU UM GUARDIÃO DA VIDA!* 🩸\n\nOlá! Acabo de me conscientizar e gerar minha Insígnia Oficial na campanha de Doação de Medula Óssea.\n\nUma simples atitude nossa pode ser a única chance de cura para alguém com leucemia ou doenças no sangue no mundo todo!\n\n✨ Faça parte você também dessa corrente do bem:\n👉 ${urlApp}`,
-        textoInstagram: `🩸 EU SOU UM GUARDIÃO DA VIDA! 🩸\n\nParticipe você também da campanha do Projeto Guardiões de Medula. Tire suas dúvidas, descubra como se cadastrar no REDOME e ajude a salvar vidas pelo mundo!\n\nAcesse o App no link: ${urlApp}`
+        textoWhatsApp: `🩸 *EU SOU UM GUARDIÃO DA VIDA!* 🩸\n\nOlá! Acabo de me conscientizar e gerar minha Insígnia Oficial na campanha de Doação de Medula Óssea.\n\nUma simples atitude nossa pode ser a única chance de cura para alguém com leucemia ou doenças no sangue no mundo todo!\n\n✨ Faça parte você também dessa corrente do bem:\n👉 ${urlApp}`
       };
     }
 
@@ -1377,44 +1402,6 @@
       const info = obterTextoCampanha();
       const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(info.textoWhatsApp)}`;
       window.open(url, '_blank');
-    }
-
-    // CORREÇÃO DO COMPARTILHAMENTO NO INSTAGRAM
-    async function compartilharInstagram() {
-      vibrar([50, 60]);
-      const info = obterTextoCampanha();
-
-      // Tenta acionar a API de compartilhamento nativa no celular (iOS / Android)
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: 'Guardiões de Medula',
-            text: info.textoInstagram,
-            url: info.urlApp
-          });
-          return;
-        } catch (err) {
-          console.log('Partilha nativa cancelada ou indisponível.');
-        }
-      }
-
-      // Fallback: Copia o texto para a área de transferência e redireciona para o Instagram
-      if (navigator.clipboard) {
-        try {
-          await navigator.clipboard.writeText(`${info.textoInstagram}\n\n${info.urlApp}`);
-          mostrarToast("✨ Legenda e link copiados! Abra o Instagram e cole na sua publicação.");
-          setTimeout(() => {
-            window.location.href = 'instagram://app';
-            setTimeout(() => {
-              window.open('https://instagram.com', '_blank');
-            }, 1000);
-          }, 1500);
-        } catch (e) {
-          window.open('https://instagram.com', '_blank');
-        }
-      } else {
-        window.open('https://instagram.com', '_blank');
-      }
     }
 
     function compartilharNativo() {
